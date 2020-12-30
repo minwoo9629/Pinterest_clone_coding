@@ -1,0 +1,14 @@
+.header_div{
+    text-align:center;
+    margin: 2rem 0;
+}
+.header_logo, .footer_logo{
+    font-family: Yellowtail;
+}
+.footer_div{
+    text-align:center;
+    margin-top:2rem;
+}
+.footer_button{
+    font-size: 0.6rem;
+}
