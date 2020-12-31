@@ -3,5 +3,13 @@
 <div style="text-align:center; max-width: 500px; margin: 4rem auto">
     <p>{{target_user.username}}</p>
     <p>{{target_user.date_joined}}</p>
+    {% if target_user == user %}
+    <a href="{% url 'accountapp:update' user.id %}">
+        <p>회원정보 수정</p>
+    </a>
+    <a href="{% url 'accountapp:delete' user.id %}">
+        <p>회원탈퇴</p>
+    </a>
+    {% endif %}
 </div>
 {% endblock %}
