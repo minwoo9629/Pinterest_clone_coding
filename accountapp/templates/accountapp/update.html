@@ -5,7 +5,7 @@
     <div class="mb-4">
         <h4>회원정보 수정</h4>
     </div>
-    <form action="{% url 'accountapp:update' user.id %}" method="post">
+    <form action="{% url 'accountapp:update' target_user.id %}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
         <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="수정">
