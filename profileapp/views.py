@@ -4,12 +4,12 @@ from django.views.generic import CreateView, UpdateView
 from profileapp.models import Profile
 from profileapp.forms import ProfileCreationForm
 from profileapp.decorators import profile_ownership_check
+from django.utils.decorators import method_decorator
 
 class ProfileCreationView(CreateView):
     model = Profile
     context_object_name = 'target_profile'
     form_class = ProfileCreationForm
-    success_url = reverse_lazy('accountapp:hello')
     template_name = 'profileapp/create.html'
 
     def form_valid(self, form):
@@ -18,14 +18,20 @@ class ProfileCreationView(CreateView):
         temp_profile.save()
         return super().form_valid(form)
 
-@method_decorator(profile_check_ownership, 'get')
-@method_decorator(profile_check_ownership, 'post')
+    def get_success_url(self):
+        return reverse_lazy('accountapp:detail', kwargs={'pk': self.object.user.pk})
+
+@method_decorator(profile_ownership_check, 'get')
+@method_decorator(profile_ownership_check, 'post')
 class ProfileUpdateView(UpdateView):
     model = Profile
     form_class = ProfileCreationForm
     context_object_name = 'target_profile'
-    success_url = reverse_lazy('accountapp:hello')
     template_name = 'profileapp/update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('accountapp:detail', kwargs={'pk': self.object.user.pk})
+
     
 
 
