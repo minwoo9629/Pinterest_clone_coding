@@ -1,15 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
-<div style="text-align:center; max-width: 500px; margin: 4rem auto">
-    <p>{{target_user.username}}</p>
-    <p>{{target_user.date_joined}}</p>
-    {% if target_user == user %}
-    <a href="{% url 'accountapp:update' user.id %}">
-        <p>회원정보 수정</p>
-    </a>
-    <a href="{% url 'accountapp:delete' user.id %}">
-        <p>회원탈퇴</p>
-    </a>
-    {% endif %}
+<div>
+    <div style="text-align:center; max-width: 500px; margin: 4rem auto">
+        <img src="{{target_user.profile.image.url}}" alt="" style="height: 12rem; width: 12rem; border-radius: 20rem; margin-bottom: 2rem;">
+        {% if target_user.profile %}
+        <h2>{{target_user.profile.nickname}}</h2>
+        <a href="{% url 'profileapp:update' pk=target_user.profile.pk %}">프로필 수정</a>
+        {% else %}
+        <a href="{% url 'profileapp:create'%}">
+            <p>프로필 작성하기</p>
+        </a>
+        {% endif %}
+        <h5>{{target_user.profile.message}}</h5>
+        {% if target_user == user %}
+        <a href="{% url 'accountapp:update' user.id %}">
+            <p>회원정보 수정</p>
+        </a>
+        <a href="{% url 'accountapp:delete' user.id %}">
+            <p>회원탈퇴</p>
+        </a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
