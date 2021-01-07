@@ -10,32 +10,33 @@
         align-items: center;
         border-radius: 1rem;
     }
-    .container img{
+
+    .container img {
         width: 100%;
         border-radius: 1rem;
     }
 </style>
+{% if article_list %}
 <div class="container">
-    <div class="item1">
-        <img src="https://picsum.photos/200/300" alt="">
-    </div>
-    <div class="item2">
-        <img src="https://picsum.photos/200/250" alt="">
-    </div>
-    <div class="item3"><img src="https://picsum.photos/200/200" alt=""></div>
-    <div class="item4"><img src="https://picsum.photos/200/400" alt=""></div>
-    <div class="item5"><img src="https://picsum.photos/200/450" alt=""></div>
-    <div class="item6"><img src="https://picsum.photos/200/300" alt=""></div>
-    <div class="item7"><img src="https://picsum.photos/200/180" alt=""></div>
-    <div class="item8"><img src="https://picsum.photos/200/255" alt=""></div>
-    <div class="item9"><img src="https://picsum.photos/200/335" alt=""></div>
-    <div class="item10"><img src="https://picsum.photos/200/447" alt=""></div>
-    <div class="item11"><img src="https://picsum.photos/200/"825 alt=""></div>
-    <div class="item12"><img src="https://picsum.photos/200/600" alt=""></div>
-    <div class="item13"><img src="https://picsum.photos/200/420" alt=""></div>
+    {%for article in article_list %}
+    <a href="{% url 'articleapp:detail' article.pk %}">
+        <!-- card.html 안에 article이라는 객체가 필요하기 때문에 with 를 사용한다. -->
+        {% include 'snippets/card.html' with article=article %}
+    </a>
+    {%endfor%}
 </div>
+<script src="{% static 'js/magic_grid.js'%}"></script>
+{%else%}
+<div class="text-center">
+    <h1>등록된 게시글이 없습니다.</h1>
+</div>
+{%endif%}
+{% include 'snippets/pagination.html' with page_obj=page_obj %}
+
+
+
 <div style="text-align: center;">
     <a href="{% url 'articleapp:create' %}" class="btn btn-dark rounded-pill col-3 mt-3 mb-3">게시글 작성</a>
 </div>
-<script src="{% static 'js/magic_grid.js'%}"></script>
+
 {% endblock %}
