@@ -6,6 +6,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from articleapp.decorators import article_ownership_check
+from commentapp.forms import CommentCreationForm
+from django.views.generic.edit import FormMixin
 # Create your views here.
 
 @method_decorator(login_required, 'get')
@@ -23,8 +25,9 @@ class ArticleCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('articleapp:detail', kwargs={'pk':self.object.pk})
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(DetailView, FormMixin):
     model = Article
+    form_class = CommentCreationForm
     context_object_name = 'target_article'
     template_name = 'articleapp/detail.html'
 
@@ -43,7 +46,7 @@ class ArticleUpdateView(UpdateView):
 
 @method_decorator(article_ownership_check, 'get')
 @method_decorator(article_ownership_check, 'post')
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(DeleteView, FormMixin):
     model = Article
     template_name = 'articleapp/delete.html'
     success_url = reverse_lazy('articleapp:list')
