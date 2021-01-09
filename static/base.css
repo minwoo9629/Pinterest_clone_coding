@@ -13,7 +13,23 @@
     font-size: 0.6rem;
 }
 
-@media screen and (max-width:500px){
+a {
+    color: black;
+    text-decoration: none;
+}
+a:hover{
+    color: black;
+    
+}
+
+.pinterest_header_nav {
+    margin : 0 0.5rem;
+}
+
+.pinterest_header_navbar {
+    margin: 1rem 0;
+}
+@media screen and (max-width:550px) {
     html{
         font-size: 13px;
     }

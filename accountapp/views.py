@@ -5,10 +5,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic.list import MultipleObjectMixin
+
 from accountapp.forms import AccountUpdateForm
 from accountapp.decorators import account_ownership_check
 
 # 리스트 안에 decorator로 만들어 사용할 수 있다.
+from articleapp.models import Article
+
 check_ownership = [login_required,account_ownership_check]
 
 @login_required
@@ -24,10 +28,15 @@ class AccountCreateView(CreateView):
     success_url = reverse_lazy('accountapp:hello')
     template_name = 'accountapp/create.html'
 
-class AccountDetailView(DetailView):
+class AccountDetailView(DetailView, MultipleObjectMixin):
     model = User
     template_name = 'accountapp/detail.html'
     context_object_name = "target_user"
+
+    paginate_by = 10
+    def get_context_data(self, **kwargs):
+        object_list = Article.objects.filter(writer=self.get_object())
+        return super(AccountDetailView, self).get_context_data(object_list=object_list, **kwargs)
 
 # 일반 function에서 사용하는 decorator를 class 내 method에 사용할 수 있도록 변환해주는 decorator
 @method_decorator(check_ownership, 'get')
