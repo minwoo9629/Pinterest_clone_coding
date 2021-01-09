@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView,UpdateView, DeleteView, ListView
+from django.views.generic.edit import FormMixin
+
 from articleapp.models import Article
 from articleapp.forms import ArticleCreationForm
 from django.utils.decorators import method_decorator
@@ -7,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from articleapp.decorators import article_ownership_check
 from commentapp.forms import CommentCreationForm
-from django.views.generic.edit import FormMixin
 # Create your views here.
 
 @method_decorator(login_required, 'get')

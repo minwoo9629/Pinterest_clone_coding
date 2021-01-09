@@ -7,14 +7,15 @@
     <form action="{% url 'commentapp:create'%}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% if user.authenticated %}
+
+        {% if user.is_authenticated %}
         <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="작성">
-        <input type="hidden" name="article_pk" value="{{article.pk}}">
         {% else %}
         <a href="{% url 'accountapp:login' %}?next={{request.path}}" class="btn btn-dark rounded-pill col-6 mt-3">
             댓글 입력을 위한 로그인
         </a>
         {%endif%}
+        <input type="hidden" name="article_pk" value="{{article.pk}}">
     </form>
 </div>
 {% endblock %}

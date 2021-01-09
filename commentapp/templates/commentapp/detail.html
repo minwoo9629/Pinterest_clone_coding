@@ -1,0 +1,18 @@
+<div style="border: 1px solid; text-align: left; padding: 4%; margin: 1rem 0; border-radius: 1rem;
+    border-color: #abb">
+    <div>
+        <strong>{{comment.writer.profile.nickname}}</strong>
+    </div>
+    &nbsp&nbsp&nbsp
+    {{comment.created}}
+    <div style="margin: 1rem 0;">
+        {{comment.content}}
+    </div>
+    {% if comment.writer == user %}
+    <div style="text-align: right;">
+        <a href="{% url 'commentapp:delete' comment.pk %}" class="btn btn-danger rounded-pill">
+            댓글 삭제
+        </a>
+    </div>
+    {%endif%}
+</div>
