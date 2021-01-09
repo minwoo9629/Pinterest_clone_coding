@@ -2,9 +2,15 @@
 {% load static %}
 {% block content %}
 <style>
+    .container {
+        padding: 0;
+        margin: 0 auto;
+    }
+    .container a{
+        width: 35%;
+        max-width: 200px;
+    }
     .container div {
-        width: 250px;
-        background-color: antiquewhite;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -36,7 +42,7 @@
 
 
 <div style="text-align: center;">
-    <a href="{% url 'articleapp:create' %}" class="btn btn-dark rounded-pill col-3 mt-3 mb-3">게시글 작성</a>
+    <a href="{% url 'articleapp:create' %}" class="btn btn-dark rounded-pill col-3 mt-3 mb-3 px-3">게시글 작성</a>
 </div>
 
 {% endblock %}
