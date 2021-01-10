@@ -3,10 +3,10 @@
         <h1 class="header_logo">MyPinterest</h1>
     </div>
     <div class="pinterest_header_navbar">
-        <span>Nav1</span>
+
         <a href="{% url 'projectapp:list' %}" class="pinterest_header_nav"><span>Project</span></a>        
         <a href="{% url 'articleapp:list' %}" class="pinterest_header_nav"><span>게시글</span></a>
-        
+        <a href="{% url 'subscribeapp:list' %}" class="pinterest_header_nav"><span>구독정보</span></a>
         {% if not user.is_authenticated %}
         <a href="{% url 'accountapp:login'%}?next={{request.path}}" class="pinterest_header_nav"><span>로그인</span></a>
         <a href="{% url 'accountapp:create'%}"><span>회원가입</span></a>
