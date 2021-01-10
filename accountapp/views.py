@@ -6,21 +6,18 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.views.generic.list import MultipleObjectMixin
-
 from accountapp.forms import AccountUpdateForm
 from accountapp.decorators import account_ownership_check
-
-# 리스트 안에 decorator로 만들어 사용할 수 있다.
 from articleapp.models import Article
-
+# 리스트 안에 decorator로 만들어 사용할 수 있다.
 check_ownership = [login_required,account_ownership_check]
 
-@login_required
-def hello(request):
-    if request.method == 'POST':
-        return redirect('accountapp:hello')
-    else:
-        return render(request, 'accountapp/hello.html')
+# @login_required
+# def hello(request):
+#     if request.method == 'POST':
+#         return redirect('accountapp:hello')
+#     else:
+#         return render(request, 'accountapp/hello.html')
 
 class AccountCreateView(CreateView):
     model = User

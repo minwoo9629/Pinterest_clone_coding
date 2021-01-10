@@ -7,7 +7,10 @@
             style="height: 12rem; width: 12rem; border-radius: 20rem; margin-bottom: 2rem; object-fit: cover;">
         <h2>{{target_user.profile.nickname}}
             {% if target_user == user %}
-            <a href="{% url 'profileapp:update' pk=target_user.profile.pk %}">프로필 수정</a>
+            <a class="material-icons" style="box-shadow: 0 0 4px #ccc; border-radius: 10rem; padding: .3rem;"
+               href="{% url 'profileapp:update' pk=target_user.profile.pk %}">
+                edit
+            </a>
             {%endif%}
         </h2>
         <h5>{{target_user.profile.message}}</h5>
@@ -22,11 +25,11 @@
         {% endif %}
 
         {% if target_user == user %}
-        <a href="{% url 'accountapp:update' user.id %}">
-            <p>회원정보 수정</p>
+        <a class="material-icons" style="box-shadow: 0 0 4px #ccc; border-radius: 10rem; padding: .3rem;" href="{% url 'accountapp:update' user.id %}">
+            settings
         </a>
-        <a href="{% url 'accountapp:delete' user.id %}">
-            <p>회원탈퇴</p>
+        <a class="material-icons" style="box-shadow: 0 0 4px #fcc; border-radius: 10rem; padding: .3rem;" href="{% url 'accountapp:delete' user.id %}">
+            cancel
         </a>
         {% endif %}
     </div>
