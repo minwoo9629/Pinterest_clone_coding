@@ -1,15 +1,31 @@
 <div style="text-align: center; margin: 1rem 0;">
     {% if page_obj.has_previous %}
-    <a href="?page={{page_obj.previous_page_number}}" class="btn btn-secondary rounded-pill">
-        {{page_obj.previous_page_number}}
+    <a href="?page={{page_obj.previous_page_number}}" class="btn clickable-btn material-icons">
+        keyboard_arrow_left
+    </a>
+    {% else %}
+    <a href="#" class="btn disabled material-icons">
+        keyboard_arrow_left
     </a>
     {% endif %}
-    <a href="?page={{page_obj.number}}" class="btn btn-secondary rounded-pill active">
-        {{page_obj.number}}
-    </a>
+    {% for page_num in page_range %}
+        {% if page_obj.number == page_num %}
+        <a class="btn active-btn active">
+            {{page_num}}
+        </a>
+        {% else %}
+        <a href="?page={{page_num}}" class="btn clickable-btn">
+            {{page_num}}
+        </a>
+        {%endif%}
+    {%endfor%}
     {% if page_obj.has_next %}
-    <a href="?page={{page_obj.next_page_number}}" class="btn btn-secondary rounded-pill">
-        {{page_obj.next_page_number}}
+    <a href="?page={{page_obj.next_page_number}}" class="btn clickable-btn material-icons">
+        keyboard_arrow_right
+    </a>
+    {% else %}
+    <a href="#" class="btn disabled material-icons">
+        keyboard_arrow_right
     </a>
     {%endif%}
 </div>

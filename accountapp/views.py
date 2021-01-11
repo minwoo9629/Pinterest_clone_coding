@@ -12,13 +12,6 @@ from articleapp.models import Article
 # 리스트 안에 decorator로 만들어 사용할 수 있다.
 check_ownership = [login_required,account_ownership_check]
 
-# @login_required
-# def hello(request):
-#     if request.method == 'POST':
-#         return redirect('accountapp:hello')
-#     else:
-#         return render(request, 'accountapp/hello.html')
-
 class AccountCreateView(CreateView):
     model = User
     form_class = UserCreationForm
@@ -31,9 +24,19 @@ class AccountDetailView(DetailView, MultipleObjectMixin):
     context_object_name = "target_user"
 
     paginate_by = 10
+    block_size = 5
     def get_context_data(self, **kwargs):
         object_list = Article.objects.filter(writer=self.get_object())
-        return super(AccountDetailView, self).get_context_data(object_list=object_list, **kwargs)
+        context = super(AccountDetailView, self).get_context_data(object_list=object_list, **kwargs)
+        start_index = int((context['page_obj'].number -1 ) / self.block_size) * self.block_size
+        end_index = min(start_index + self.block_size, len(context['paginator'].page_range))
+        context['page_range'] = context['paginator'].page_range[start_index:end_index]
+
+        return context
+
+
+
+
 
 # 일반 function에서 사용하는 decorator를 class 내 method에 사용할 수 있도록 변환해주는 decorator
 @method_decorator(check_ownership, 'get')

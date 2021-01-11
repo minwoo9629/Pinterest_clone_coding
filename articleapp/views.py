@@ -56,4 +56,15 @@ class ArticleListView(ListView):
     model = Article
     context_object_name = 'article_list'
     template_name = 'articleapp/list.html'
-    paginate_by = 10
+    paginate_by = 5
+    block_size = 5
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleListView, self).get_context_data(**kwargs)
+        start_index =  int((context['page_obj'].number - 1) / self.block_size) * self.block_size
+        end_index = min(start_index + self.block_size, len(context['paginator'].page_range))
+        context['page_range'] = context['paginator'].page_range[start_index:end_index]
+
+        return context
+
+        

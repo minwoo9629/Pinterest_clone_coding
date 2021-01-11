@@ -29,9 +29,13 @@ class ProjectDetailView(DetailView, MultipleObjectMixin):
     context_object_name = 'target_project'
     template_name = 'projectapp/detail.html'
     paginate_by = 10
-
+    block_size = 5
     def get_context_data(self, **kwargs):
         object_list = Article.objects.filter(project=self.get_object())
+        context = super(ProjectDetailView, self).get_context_data(object_list=object_list, **kwargs)
+        start_index =  int((context['page_obj'].number - 1) / self.block_size) * self.block_size
+        end_index = min(start_index + self.block_size, len(context['paginator'].page_range))
+        context['page_range'] = context['paginator'].page_range[start_index:end_index]
         project = self.object
         user = self.request.user
         if user.is_authenticated:
@@ -39,12 +43,12 @@ class ProjectDetailView(DetailView, MultipleObjectMixin):
         else:
             subscription = None
 
-        return super(ProjectDetailView, self).get_context_data(object_list=object_list, subscription=subscription, **kwargs)
-
+        context['subscription'] = subscription
+        return context
 
 
 class ProjectListView(ListView):
     model = Project
     context_object_name = 'project_list'
     template_name = 'projectapp/list.html'
-    paginate_by = 10
+        
