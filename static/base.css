@@ -24,6 +24,11 @@ a:hover{
 
 .pinterest_header_nav {
     margin : 0 0.5rem;
+    font-weight: bold;
+}
+
+.pinterest_header_nav:hover{
+    background-color: #E6E6E6;
 }
 
 .pinterest_header_navbar {

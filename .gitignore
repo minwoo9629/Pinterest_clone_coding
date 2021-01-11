@@ -79,6 +79,7 @@ __pycache__/
 
 media/
 
+# 추후에 수정
 Dockerfile
 
 nginx.conf
