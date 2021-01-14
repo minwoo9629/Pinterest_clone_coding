@@ -15,7 +15,7 @@ check_ownership = [login_required,account_ownership_check]
 class AccountCreateView(CreateView):
     model = User
     form_class = UserCreationForm
-    success_url = reverse_lazy('accountapp:hello')
+    success_url = reverse_lazy('articleapp:list')
     template_name = 'accountapp/create.html'
 
 class AccountDetailView(DetailView, MultipleObjectMixin):

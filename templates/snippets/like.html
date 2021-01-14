@@ -1,0 +1,47 @@
+<div style="text-align: left;">
+    {% if user_like_flag %}
+    <span type="button" class="like material-icons" name="{{article.id}}" value="Like" style="color: red;">
+        favorite
+    </span>
+    {% else %}
+    <span type="button" class="like material-icons" name="{{article.id}}" value="Like">
+        favorite_border
+    </span>
+    {% endif %}
+    <p id="count-{{article.id}}">{{article.like_count}}개</p>
+    <!-- <p id="like-user-{{article.id}}">
+        {% for like_user in article.like_user_set.all %}
+        {{like_user.profile.nickname}}
+        {%endfor%}
+    </p> -->
+</div>
+<script>
+    $('.like').click(function () {
+        var pk = $(this).attr('name')
+        $.ajax({
+            method: "POST",
+            url: "{% url 'articleapp:like'%}",
+            data: { 'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}' },
+            dataType: "json",
+        }).done(function (data) {
+            $("#count-" + pk).html(data.like_count + "개");
+            var users = $("#like-user-" + pk).text();
+            if (data.message === "True") {
+                $(".like").css('color', 'red')
+                $(".like").html("favorite")
+            } else {
+                console.log(data.message)
+                $(".like").css('color', 'black')
+                $(".like").html("favorite_border")
+            }
+            if (users.indexOf(data.nickname) != -1) {
+                $("#like-user-" + pk).text(users.replace(data.nickname, ""));
+            } else {
+                $("#like-user-" + pk).text(data.nickname + users);
+            }
+        }).fail(function (request, status, error) {
+            alert("로그인이 필요합니다.")
+            console.log(error)
+        })
+    })
+</script>

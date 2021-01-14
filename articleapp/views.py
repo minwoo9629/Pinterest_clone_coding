@@ -1,13 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView, DetailView,UpdateView, DeleteView, ListView
+from django.views.generic.base import View
 from django.views.generic.edit import FormMixin
-from articleapp.models import Article
+from articleapp.models import Article, Like
 from articleapp.forms import ArticleCreationForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.urls import reverse_lazy
 from articleapp.decorators import article_ownership_check
 from commentapp.forms import CommentCreationForm
+from django.http import JsonResponse
+import json
 # Create your views here.
 
 @method_decorator(login_required, 'get')
@@ -30,6 +34,15 @@ class ArticleDetailView(DetailView, FormMixin):
     form_class = CommentCreationForm
     context_object_name = 'target_article'
     template_name = 'articleapp/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        like = Like.objects.filter(user=self.request.user, article=self.get_object())
+        if like.exists():
+            context['user_like_flag'] = True
+        else:
+            context['user_like_flag'] = False
+        return context
 
 
 @method_decorator(article_ownership_check, 'get')
@@ -67,4 +80,19 @@ class ArticleListView(ListView):
 
         return context
 
+@login_required
+@require_POST
+def Article_like(request):
+    pk = request.POST.get('pk', None)
+    article = get_object_or_404(Article, pk=pk)
+    like, like_existence = Like.objects.get_or_create(user=request.user, article=article)
+
+    if not like_existence:
+        like.delete()
+        message = "False"
+    else:
+        message = "True"
+    context = {'like_count':article.like_count,'message':message, 'nickname': request.user.profile.nickname}
+
+    return JsonResponse(context)
         

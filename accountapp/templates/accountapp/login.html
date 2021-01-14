@@ -3,9 +3,23 @@
     <div>
         <form action="{% url 'accountapp:login'%}" method="post">
             {% csrf_token %}
-            {% bootstrap_form form %}
+            <!-- {% bootstrap_form form %} -->
+            <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" class="form-control rounded-pill" placeholder="아이디" title="" required="" id="id_username">
+            <input type="password" name="password" autocomplete="current-password" class="form-control rounded-pill" placeholder="비밀번호" title="" required="" id="id_password">
             <input type="submit" class="btn btn-outline-info rounded-pill col-3 mt-3" value="로그인">
         </form>
         <button type="button" class="btn btn-outline-dark rounded-pill col-3 mt-3" data-dismiss="modal">취소</button>
     </div>
 </div>
+<style>
+    .form-control{
+        width: 25rem;
+        text-align: center;
+        margin: 0px auto;
+    }
+    #id_username{
+        margin-bottom: 2rem;
+    }
+</style>
+<script>
+</script>
