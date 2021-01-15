@@ -37,9 +37,12 @@ class ArticleDetailView(DetailView, FormMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
-        like = Like.objects.filter(user=self.request.user, article=self.get_object())
-        if like.exists():
-            context['user_like_flag'] = True
+        if self.request.user.is_authenticated:
+            like = Like.objects.filter(user=self.request.user, article=self.get_object())
+            if like.exists():
+                context['user_like_flag'] = True
+            else:
+                context['user_like_flag'] = False
         else:
             context['user_like_flag'] = False
         return context
@@ -69,7 +72,7 @@ class ArticleListView(ListView):
     model = Article
     context_object_name = 'article_list'
     template_name = 'articleapp/list.html'
-    paginate_by = 5
+    paginate_by = 10
     block_size = 5
 
     def get_context_data(self, **kwargs):
@@ -92,7 +95,7 @@ def Article_like(request):
         message = "False"
     else:
         message = "True"
-    context = {'like_count':article.like_count,'message':message, 'nickname': request.user.profile.nickname}
+    context = {'like_count':article.like_count,'message':message}
 
     return JsonResponse(context)
         
