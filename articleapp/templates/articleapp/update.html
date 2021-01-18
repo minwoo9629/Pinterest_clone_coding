@@ -10,8 +10,30 @@
     <form action="{% url 'articleapp:update' target_article.pk %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
+        <div class="col-md-12" style="text-align: center">
+            <img id="myimg" style="height: 200px;text-align: center;">
+        </div>
         <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="수정">
     </form>
 </div>
 <script>var editor = new MediumEditor('.editable');</script>
+<script>
+    function readURL(input) {
+        console.log(input.files)
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#myimg').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $(function () { //document ready call
+        $("#id_image").change(function () {
+            readURL(this);
+        });
+    });
+</script>
 {% endblock %}

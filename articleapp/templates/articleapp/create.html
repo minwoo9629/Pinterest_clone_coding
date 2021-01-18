@@ -2,7 +2,8 @@
 {% load bootstrap4 %}
 {% block content %}
 <script src="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/js/medium-editor.min.js"></script>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/css/medium-editor.min.css" type="text/css"
+    media="screen" charset="utf-8">
 <div style="text-align:center; max-width: 500px; margin: 4rem auto">
     <div class="mb-4">
         <h4>게시글 작성</h4>
@@ -10,8 +11,30 @@
     <form action="{% url 'articleapp:create'%}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
-        <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="작성">
+        <div class="col-md-12" style="text-align: center">
+            <img id="myimg" style="height: 200px;text-align: center;">
+        </div>
+        <input type="submit" class="btn btn-outline-dark rounded-pill col-3 mt-3" value="작성">
     </form>
 </div>
 <script>var editor = new MediumEditor('.editable');</script>
+<script>
+    function readURL(input) {
+        console.log(input)
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#myimg').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $(function () { //document ready call
+        $("#id_image").change(function () {
+            readURL(this);
+        });
+    });
+</script>
 {% endblock %}
