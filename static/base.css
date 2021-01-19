@@ -1,15 +1,19 @@
-.header_div{
-    text-align:center;
+.header_div {
+    text-align: center;
     margin: 2rem 0;
 }
-.header_logo, .footer_logo{
+
+.header_logo,
+.footer_logo {
     font-family: Yellowtail;
 }
-.footer_div{
-    text-align:center;
-    margin-top:2rem;
+
+.footer_div {
+    text-align: center;
+    margin-top: 2rem;
 }
-.footer_button{
+
+.footer_button {
     font-size: 0.6rem;
 }
 
@@ -17,25 +21,138 @@ a {
     color: black;
     text-decoration: none;
 }
-a:hover{
+
+a:hover {
     color: black;
-    
+
 }
 
 .pinterest_header_nav {
-    margin : 0 0.5rem;
+    margin: 0 0.5rem;
     font-weight: bold;
 }
 
-.pinterest_header_nav:hover{
+.pinterest_header_nav:hover {
     background-color: #E6E6E6;
 }
 
 .pinterest_header_navbar {
     margin: 1rem 0;
 }
-@media screen and (max-width:550px) {
-    html{
-        font-size: 13px;
+
+
+/* 여기는 추후 css 분리 */
+
+.article_container {
+    border-radius: 1rem;
+    max-width: 1000px;
+    display: flex;
+    box-shadow: 0 0 4px #ccc;
+    margin: 0rem auto;
+}
+
+.article_image_container {
+    width: 50%;
+    height: 100%;
+    margin: 0rem;
+    float: left;
+    border-radius: 1rem 0rem 0rem 1rem;
+}
+
+.article_image {
+    width: 100%;
+    height: 100%;
+    margin: 0rem;
+    border-radius: 1rem 0rem 0rem 1rem;
+}
+
+.article_content_container {
+    min-width: 50%;
+    margin: 0rem;
+    float: right;
+    border-radius: 0rem 1rem 1rem 0rem;
+    display: flex;
+}
+
+.article_content {
+    width: 100%;
+    height: 100%;
+    margin: 0rem;
+    border-radius: 0rem 1rem 1rem 0rem;
+}
+
+.comments {
+    margin-left: 2rem;
+    width: 90%;
+    display: none;
+}
+
+/* @media screen and (max-width:1000px) {
+    html {
+        font-size: 14px;
+    }
+
+    .article_container {
+        width: 500px;
+        height: 1000px;
+    }
+
+    .article_image_container {
+        float: none;
+        width: 100%;
+        height: 50%;
+    }
+
+    .article_content_container {
+        float: none;
+        width: 100%;
+        height: 50%;
+    }
+
+    .article_image {
+        border-radius: 1rem 1rem 0rem 0rem;
+        width: 100%;
+        height: 100%;
+    }
+
+    .article_content {
+        border-radius: 0rem 0rem 1rem 1rem;
+        width: 100%;
+        height: 100%;
     }
 }
+
+@media screen and (max-width:600px) {
+    html {
+        font-size: 10px;
+    }
+
+    .article_container {
+        width: 500px;
+        height: 1200px;
+    }
+
+    .article_image_container {
+        float: none;
+        width: 100%;
+        height: 50%;
+    }
+
+    .article_content_container {
+        float: none;
+        width: 100%;
+        height: 50%;
+    }
+
+    .article_image {
+        border-radius: 1rem 1rem 0rem 0rem;
+        width: 100%;
+        height: 100%;
+    }
+
+    .article_content {
+        border-radius: 0rem 0rem 1rem 1rem;
+        width: 100%;
+        height: 100%;
+    }
+} */
