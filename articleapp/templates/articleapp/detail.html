@@ -1,33 +1,115 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>
-    <div style="text-align:center; max-width: 500px; margin: 4rem auto">
-        <h1>
-            {{target_article.title}}
-        </h1>
-        <h3>
-            {{target_article.writer.profile.nickname}}
-        </h3>
-        <img style="width:100%; border-radius: 1rem; margin: 2rem 0;" src="{{target_article.image.url}}" alt="">
-        <div style="text-align:left">
-            {{target_article.content | safe }}
+<div class="article_container" style="border-radius: 1rem; height: 37.5rem; max-width: 62.5rem; margin: 0rem auto; box-shadow: 0 0 4px #ccc;">
+    <div class="article_image" style="width:50%; border-radius: 1rem 0rem 0rem 1rem; height: 100%; margin: 0rem; float: left;">
+        <img style="width:100%; height:100%; border-radius: 1rem 0rem 0rem 1rem; margin: 0rem;"
+            src="{{target_article.image.url}}" alt="">
+    </div>
+    <div class="article_content" style="width: 50%; border-radius: 0rem 1rem 1rem 0rem; height: 100%; margin: 0rem; float: right;">
+        <div style="width: 100%; height: 100%; margin: 0rem">
+            <div style="margin: 1rem; height: 10%;">
+                <span class="material-icons more_horiz">
+                    more_horiz
+                </span>
+                <button class="btn btn-primary rounded-pill col-2" style="float: right;">
+                    저장
+                </button>
+
+                {% include 'snippets/like.html' with article=target_article %}
+            </div>
+            <div style="margin-left: 2rem;">
+                <h4 class="article_title" style="margin-bottom: 0.8rem;">
+                    {{target_article.title}}
+                </h4>
+                <div class="content" style="text-align:left; margin-bottom: 0.8rem;">
+                    {{target_article.content | safe }}
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    {% if target_article.writer.profile %}
+                    <img src="{{target_article.writer.profile.image.url}}" alt=""
+                        style="height: 2.5rem; width: 2.5rem; border-radius: 20rem; object-fit: cover;">
+                    <span class="writer" style="margin-bottom: 0.8rem;">
+                        {{target_article.writer.profile.nickname}}
+                    </span>
+                    {%else%}
+                    <span class="material-icons" style="font-size: 2.5rem;">
+                        account_circle
+                    </span>
+                    {%endif%}
+                </div>
+            </div>
+            <!-- <div style="margin-left: 2rem;">
+                {% if target_article.writer == user %}
+                <a href="{% url 'articleapp:update' target_article.pk %}" class="btn btn-primary rounded-pill col-3">
+                    글 수정
+                </a>
+                <a href="{% url 'articleapp:delete' target_article.pk %}" class="btn btn-danger rounded-pill col-3">
+                    글 삭제
+                </a>
+                {%endif%}
+            </div> -->
+            <div style="margin-left: 2rem; width: 100%;">
+                <h3 style="float: left;">댓글</h3>
+                <button class="btn material-icons comment_btn">
+                    keyboard_arrow_right
+                </button>
+                <button class="btn material-icons comment_btn" style="display: none;">
+                    keyboard_arrow_down
+                </button>
+            </div>
+            <div class="comments" style="margin-left: 2rem; width: 90%; display: none;">
+                {% for comment in target_article.comment.all %}
+                {% include 'commentapp/detail.html' with comment=comment %}
+                {%endfor%}
+                {% if user.is_authenticated %}
+                {% include 'commentapp/create.html' with article=target_article %}
+                {%else%}
+                {%endif%}
+            </div>
         </div>
-        {% if target_article.writer == user %}        
-        <a href="{% url 'articleapp:update' target_article.pk %}" class="btn btn-primary rounded-pill col-3">
-            수정
-        </a>
-        <a href="{% url 'articleapp:delete' target_article.pk %}" class="btn btn-danger rounded-pill col-3">
-            삭제
-        </a>
-        {%endif%}
-        <hr>
-        {% include 'snippets/like.html' with article=target_article %}
-
-        {% for comment in target_article.comment.all %}
-            {% include 'commentapp/detail.html' with comment=comment %}
-        {%endfor%}
-
-        {% include 'commentapp/create.html' with article=target_article %}
     </div>
 </div>
+<script>
+    $('.comment_btn').click(function () {
+        this.blur()
+        $('.comment_btn').toggle();
+        $('.comments').toggle();
+    });
+</script>
+<style>
+    .comment_btn:hover {
+        background-color: #c7c1c1;
+    }
+
+    .comment_btn {
+        font-size: 2rem;
+        padding: 0;
+        border-radius: 10rem;
+    }
+
+    .more_horiz {
+        float: left;
+        height: 100%;
+        margin-right: 0.5rem;
+        border-radius: 10rem;
+    }
+
+    .more_horiz:hover {
+        background-color: #c7c1c1;
+    }
+    
+    /* @media ( max-width: 50rem ) {
+        .article_container{
+          width: 30rem;
+        }
+        .article_image {
+          float: none;
+          width: 100%;
+        }
+    `   .article_content {
+          float: none;
+          width: 100%;
+        }
+      } */
+</style>
 {% endblock %}

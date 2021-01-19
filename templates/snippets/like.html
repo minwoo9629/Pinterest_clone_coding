@@ -1,4 +1,4 @@
-<div style="text-align: left;">
+<div style="text-align: left; margin-top: 1rem;">
     {% if user_like_flag %}
     <span type="button" class="like material-icons" name="{{article.id}}" value="Like" style="color: red;">
         favorite
@@ -9,11 +9,6 @@
     </span>
     {% endif %}
     <p id="count-{{article.id}}">{{article.like_count}}개</p>
-    <!-- <p id="like-user-{{article.id}}">
-        {% for like_user in article.like_user_set.all %}
-        {{like_user.profile.nickname}}
-        {%endfor%}
-    </p> -->
 </div>
 <script>
     $('.like').click(function () {
