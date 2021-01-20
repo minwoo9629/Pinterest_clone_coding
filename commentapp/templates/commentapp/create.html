@@ -6,12 +6,12 @@
         {% bootstrap_form form %}
 
         {% if user.is_authenticated %}
-        <input class="btn btn-outline-dark rounded-pill col-2 mt-3 add_comment_btn" type="submit" value="작성" style="float: right; margin-left: 1rem; display: none;">
+        <input class="btn btn-outline-dark rounded-pill col-2 mt-3 mb-3 add_comment_btn" type="submit" value="작성" style="float: right; margin-left: 1rem; display: none;">
         
         {%endif%}
         <input type="hidden" name="article_pk" value="{{article.pk}}">
     </form>
-    <button class="btn btn-outline-dark rounded-pill col-2 mt-3 cancel_btn" style="float: right; display: none;">취소</button>
+    <button class="btn btn-outline-dark rounded-pill col-2 mt-3 mb-3 cancel_btn" style="float: right; display: none;">취소</button>
 </div>
 
 <script>
