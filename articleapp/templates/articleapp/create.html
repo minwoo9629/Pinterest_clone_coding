@@ -1,21 +1,58 @@
 {% extends 'base.html' %}
-{% load bootstrap4 %}
 {% block content %}
 <script src="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/js/medium-editor.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/css/medium-editor.min.css" type="text/css"
     media="screen" charset="utf-8">
-<div style="text-align:center; max-width: 500px; margin: 4rem auto">
-    <div class="mb-4">
-        <h4>게시글 작성</h4>
+
+<div class="create_container">
+    <div class="sub_create_container">
+        <form class="form_area" action="{% url 'articleapp:create'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="project_area">
+                <div>
+                    <select name="project" class="form-control" title="" id="id_project">
+                        <option value="" selected="">---------</option>
+
+                        <option value="1">노트북 사진</option>
+
+                        <option value="3">풍경</option>
+                    </select>
+                </div>
+            </div>
+            <div class="main_area">
+                <div class="image_area">
+                    이미지 구역
+                    <div class="form-group"><label for="id_image">사진</label><br><input type="file" name="image"
+                            accept="image/*" class="form-control-file" title="" required="" id="id_image"></div>
+                    <div class="col-md-12" style="text-align: center">
+                        <img id="myimg">
+                    </div>
+                </div>
+                <div class="content_area">
+                    <div style="padding-right: 3rem;">
+                        {{form.title}}
+                    </div>
+                    <div style="float: left;">
+                        {% if user.profile %}
+                        <img src="{{user.profile.image.url}}" alt=""
+                            style="height: 2.5rem; width: 2.5rem; border-radius: 20rem; object-fit: cover;">
+                        <span class="writer">
+                            {{user.profile.nickname}}
+                        </span>
+                        {%else%}
+                        <span class="material-icons" style="font-size: 2.5rem;">
+                            account_circle
+                        </span>
+                        {%endif%}
+                    </div>
+                    <div style="padding-right: 3rem;">
+                        {{form.content}}
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-outline-dark rounded-pill col-3 mt-3 mb-3" value="작성">
+        </form>
     </div>
-    <form action="{% url 'articleapp:create'%}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <div class="col-md-12" style="text-align: center">
-            <img id="myimg" style="height: 200px;text-align: center;">
-        </div>
-        <input type="submit" class="btn btn-outline-dark rounded-pill col-3 mt-3" value="작성">
-    </form>
 </div>
 <script>var editor = new MediumEditor('.editable');</script>
 <script>
@@ -37,4 +74,87 @@
         });
     });
 </script>
+<style>
+    .create_container {
+        text-align: center;
+        background-color: #F2F2F2;
+        padding: 1rem 3rem;
+    }
+
+    .sub_create_container {
+        border-radius: 1rem;
+        max-width: 800px;
+        min-height: 100px;
+        overflow: hidden;
+        box-shadow: 0 0 4px #ccc;
+        margin: 2rem auto;
+        background-color: white;
+        text-align: center;
+    }
+
+    .main_area {
+        width: 100%;
+        height: 25rem;
+    }
+
+    .project_area {
+        width: 100%;
+        margin: 1rem 0;
+    }
+
+    .image_area {
+        width: 50%;
+        height: 100%;
+        margin-bottom: 2rem;
+        float: left;
+    }
+
+    .content_area {
+        width: 50%;
+        height: 100%;
+        margin-bottom: 2rem;
+        float: right;
+    }
+
+    .input_title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 1rem 0 2rem 0;
+        width: 100%;
+    }
+
+    .input_content {
+        width: 100%;
+        margin: 1rem 0 2rem 0;
+        resize: none;
+    }
+
+    .input_title:focus,
+    .input_content:focus {
+        border-color: blue;
+    }
+
+    .input_title,
+    .input_content {
+        outline: 0;
+        border-width: 0 0 3px 0px;
+    }
+</style>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+<!-- <div class="form-control editable medium-editor-element medium-editor-placeholder" id="medium-editor-1611157697698"
+    name="content" cols="40" rows="10" style="heigth: auto; text-align: left;" placeholder="내용" title="" required=""
+    medium-editor-textarea-id="medium-editor-1611157697698" contenteditable="true" spellcheck="true"
+    data-medium-editor-element="true" role="textbox" aria-multiline="true" data-medium-editor-editor-index="1"
+    medium-editor-index="756b0b30-7429-d19a-15f1-e5f031b9e0da" data-placeholder="Type your text"></div><textarea
+    name="content" cols="40" rows="10" class="form-control editable medium-editor-hidden"
+    style="heigth: auto; text-align: left;" placeholder="내용" title="" required="" id="id_content"
+    medium-editor-textarea-id="medium-editor-1611157697698"></textarea> -->
