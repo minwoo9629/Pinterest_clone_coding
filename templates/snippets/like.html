@@ -1,14 +1,14 @@
-<div style="text-align: left; margin-top: 1rem;">
+<div style="display: inline-block;">
     {% if user_like_flag %}
-    <span type="button" class="like material-icons" name="{{article.id}}" value="Like" style="color: red;">
+    <span class="like material-icons" name="{{article.id}}" value="Like" style="color: red;">
         favorite
     </span>
     {% else %}
-    <span type="button" class="like material-icons" name="{{article.id}}" value="Like">
+    <span class="like material-icons" name="{{article.id}}" value="Like">
         favorite_border
     </span>
     {% endif %}
-    <p id="count-{{article.id}}" style="margin-left: 2rem;">{{article.like_count}}개</p>
+    <p id="count-{{article.id}}" class="article_count">{{article.like_count}}개</p>
 </div>
 <script>
     $('.like').click(function () {
@@ -39,3 +39,11 @@
         })
     })
 </script>
+<style>
+    .like{
+        cursor: pointer;
+    }
+    .article_count{
+        text-align: center;
+    }
+</style>
