@@ -4,35 +4,38 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/css/medium-editor.min.css" type="text/css"
     media="screen" charset="utf-8">
 
-<div class="create_container">
-    <div class="sub_create_container">
+<div class="create_container_background">
+    <div class="create_container">
         <form class="form_area" action="{% url 'articleapp:create'%}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="project_area">
-                <div>
-                    <select name="project" class="form-control" title="" id="id_project">
-                        <option value="" selected="">---------</option>
-
-                        <option value="1">노트북 사진</option>
-
-                        <option value="3">풍경</option>
-                    </select>
-                </div>
-            </div>
             <div class="main_area">
                 <div class="image_area">
-                    이미지 구역
-                    <div class="form-group"><label for="id_image">사진</label><br><input type="file" name="image"
-                            accept="image/*" class="form-control-file" title="" required="" id="id_image"></div>
-                    <div class="col-md-12" style="text-align: center">
-                        <img id="myimg">
+                    <div class="upload_img_box change_box">
+                        <img id="my_img">
+                        <span class="material-icons delete_image">
+                            delete
+                        </span>
                     </div>
+                    <label class="input_image_btn change_box" for="input_img">
+                        <div class="upload_contour">
+                            <div>
+                                <span class="material-icons" style="font-size: 2.5rem;">
+                                    arrow_circle_up
+                                </span>
+                                <p>클릭하여 업로드</p>
+                            </div>
+                        </div>
+                    </label>
+                    {{form.image}}
                 </div>
                 <div class="content_area">
+                    <div class="project_area">
+                        {{form.project}}
+                    </div>
                     <div style="padding-right: 3rem;">
                         {{form.title}}
                     </div>
-                    <div style="float: left;">
+                    <div style="float: left; margin: 0 0 0 1rem;">
                         {% if user.profile %}
                         <img src="{{user.profile.image.url}}" alt=""
                             style="height: 2.5rem; width: 2.5rem; border-radius: 20rem; object-fit: cover;">
@@ -56,40 +59,44 @@
 </div>
 <script>var editor = new MediumEditor('.editable');</script>
 <script>
-    function readURL(input) {
-        console.log(input)
+    function upload_img(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#myimg').attr('src', e.target.result);
+                $('#my_img').attr('src', e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);
         }
+        $('.change_box').toggle()
     }
     $(function () { //document ready call
         $("#id_image").change(function () {
-            readURL(this);
+            upload_img(this);
         });
+    });
+    $('.delete_image').click(function () {
+        $('#input_img').val('');
+        $('#my_img').attr('src', '');
+        $('.change_box').toggle()
     });
 </script>
 <style>
-    .create_container {
+    .create_container_background {
         text-align: center;
         background-color: #F2F2F2;
         padding: 1rem 3rem;
     }
 
-    .sub_create_container {
+    .create_container {
         border-radius: 1rem;
-        max-width: 800px;
-        min-height: 100px;
-        overflow: hidden;
+        max-width: 750px;
         box-shadow: 0 0 4px #ccc;
         margin: 2rem auto;
         background-color: white;
-        text-align: center;
+        min-height: 100px;
+        overflow: hidden;
     }
 
     .main_area {
@@ -97,64 +104,114 @@
         height: 25rem;
     }
 
-    .project_area {
-        width: 100%;
-        margin: 1rem 0;
-    }
-
     .image_area {
         width: 50%;
         height: 100%;
-        margin-bottom: 2rem;
         float: left;
+        margin: 5rem 0 1rem 0;
+        padding: 0 2rem;
+    }
+
+    #input_img {
+        display: none;
+    }
+
+    .input_image_btn {
+        width: 100%;
+        height: 100%;
+        background-color: #F2F2F2;
+        cursor: pointer;
+        border-radius: 1rem;
+        padding: 1rem 1rem;
+    }
+
+    .upload_img_box {
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        display: none;
+        position: relative;
+    }
+
+    #my_img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 1rem;
+    }
+
+    .delete_image {
+        border-radius: 2rem;
+        padding: 0.5rem;
+        font-size: 2rem;
+        box-shadow: 0 0 4px #ccc;
+        z-index: 1;
+        left: 0;
+        position: absolute;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .delete_image:hover {
+        background-color: #F2F2F2;
+    }
+
+    .upload_contour {
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        border: 3px dashed #A4A4A4;
+        justify-content: center;
+        align-items: center;
+        display: flex;
     }
 
     .content_area {
         width: 50%;
         height: 100%;
-        margin-bottom: 2rem;
         float: right;
+    }
+
+    .project_area {
+        text-align: right;
+        width: 100%;
+        margin: 2rem 0;
+    }
+
+    .input_project {
+        margin-right: 1.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        box-shadow: 0 0 4px #ccc;
+    }
+
+    .input_project:focus {
+        outline: none;
     }
 
     .input_title {
         font-size: 2rem;
         font-weight: bold;
-        margin: 1rem 0 2rem 0;
+        margin: 1rem 0 2rem 1rem;
         width: 100%;
     }
 
     .input_content {
         width: 100%;
-        margin: 1rem 0 2rem 0;
+        margin: 1rem 0 2rem 1rem;
         resize: none;
     }
 
     .input_title:focus,
     .input_content:focus {
+        border-width: 0 0 2px 0px;
         border-color: blue;
     }
 
     .input_title,
     .input_content {
         outline: 0;
-        border-width: 0 0 3px 0px;
+        border-width: 0 0 1px 0;
     }
 </style>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-<!-- <div class="form-control editable medium-editor-element medium-editor-placeholder" id="medium-editor-1611157697698"
-    name="content" cols="40" rows="10" style="heigth: auto; text-align: left;" placeholder="내용" title="" required=""
-    medium-editor-textarea-id="medium-editor-1611157697698" contenteditable="true" spellcheck="true"
-    data-medium-editor-element="true" role="textbox" aria-multiline="true" data-medium-editor-editor-index="1"
-    medium-editor-index="756b0b30-7429-d19a-15f1-e5f031b9e0da" data-placeholder="Type your text"></div><textarea
-    name="content" cols="40" rows="10" class="form-control editable medium-editor-hidden"
-    style="heigth: auto; text-align: left;" placeholder="내용" title="" required="" id="id_content"
-    medium-editor-textarea-id="medium-editor-1611157697698"></textarea> -->

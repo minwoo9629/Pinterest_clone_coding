@@ -3,37 +3,214 @@
 {% block content %}
 <script src="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/js/medium-editor.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
-<div style="text-align:center; max-width: 500px; margin: 4rem auto">
-    <div class="mb-4">
-        <h4>게시글 수정</h4>
+<div class="update_container_background">
+    <div class="update_container">
+        <form class="form_area" action="{% url 'articleapp:update' target_article.pk%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="main_area">
+                <div class="image_area">
+                    <div class="upload_img_box change_box">
+                        <img id="my_img" src="{{target_article.image.url}}">
+                        <span class="material-icons delete_image">
+                            delete
+                        </span>
+                    </div>
+                    <label class="input_image_btn change_box" for="input_img">
+                        <div class="upload_contour">
+                            <div>
+                                <span class="material-icons" style="font-size: 2.5rem;">
+                                    arrow_circle_up
+                                </span>
+                                <p>클릭하여 업로드</p>
+                            </div>
+                        </div>
+                    </label>
+                    {{form.image}}
+                </div>
+                <div class="content_area">
+                    <div class="project_area">
+                        {{form.project}}
+                    </div>
+                    <div style="padding-right: 3rem;">
+                        {{form.title}}
+                    </div>
+                    <div style="float: left; margin: 0 0 0 1rem;">
+                        {% if user.profile %}
+                        <img src="{{user.profile.image.url}}" alt=""
+                            style="height: 2.5rem; width: 2.5rem; border-radius: 20rem; object-fit: cover;">
+                        <span class="writer">
+                            {{user.profile.nickname}}
+                        </span>
+                        {%else%}
+                        <span class="material-icons" style="font-size: 2.5rem;">
+                            account_circle
+                        </span>
+                        {%endif%}
+                    </div>
+                    <div style="padding-right: 3rem;">
+                        {{form.content}}
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-outline-dark rounded-pill col-3 mt-3 mb-3" value="작성">
+        </form>
     </div>
-    <form action="{% url 'articleapp:update' target_article.pk %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <div class="col-md-12" style="text-align: center">
-            <img id="myimg" style="height: 200px;text-align: center;">
-        </div>
-        <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="수정">
-    </form>
 </div>
 <script>var editor = new MediumEditor('.editable');</script>
 <script>
-    function readURL(input) {
-        console.log(input.files)
+    function upload_img(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#myimg').attr('src', e.target.result);
+                $('#my_img').attr('src', e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);
         }
+        $('.change_box').toggle()
     }
     $(function () { //document ready call
         $("#id_image").change(function () {
-            readURL(this);
+            upload_img(this);
         });
     });
+    $('.delete_image').click(function () {
+        $('#input_img').val('');
+        $('#my_img').attr('src', '');
+        $('.change_box').toggle()
+    });
 </script>
+<style>
+    .update_container_background {
+        text-align: center;
+        background-color: #F2F2F2;
+        padding: 1rem 3rem;
+    }
+
+    .update_container {
+        border-radius: 1rem;
+        max-width: 750px;
+        box-shadow: 0 0 4px #ccc;
+        margin: 2rem auto;
+        background-color: white;
+        min-height: 100px;
+        overflow: hidden;
+    }
+
+    .main_area {
+        width: 100%;
+        height: 25rem;
+    }
+
+    .image_area {
+        width: 50%;
+        height: 100%;
+        float: left;
+        margin: 5rem 0 1rem 0;
+        padding: 0 2rem;
+    }
+
+    #input_img {
+        display: none;
+    }
+
+    .input_image_btn {
+        width: 100%;
+        height: 100%;
+        background-color: #F2F2F2;
+        cursor: pointer;
+        border-radius: 1rem;
+        padding: 1rem 1rem;
+        display: none;
+    }
+
+    .upload_img_box {
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        position: relative;
+    }
+
+    #my_img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 1rem;
+    }
+
+    .delete_image {
+        border-radius: 2rem;
+        padding: 0.5rem;
+        font-size: 2rem;
+        box-shadow: 0 0 4px #ccc;
+        z-index: 1;
+        left: 0;
+        position: absolute;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .delete_image:hover {
+        background-color: #F2F2F2;
+    }
+
+    .upload_contour {
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        border: 3px dashed #A4A4A4;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+    .content_area {
+        width: 50%;
+        height: 100%;
+        float: right;
+    }
+
+    .project_area {
+        text-align: right;
+        width: 100%;
+        margin: 2rem 0;
+    }
+
+    .input_project {
+        margin-right: 2rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        box-shadow: 0 0 4px #ccc;
+    }
+
+    .input_project:focus {
+        outline: none;
+    }
+
+    .input_title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 1rem 0 2rem 1rem;
+        width: 100%;
+    }
+
+    .input_content {
+        width: 100%;
+        margin: 1rem 0 2rem 1rem;
+        resize: none;
+    }
+
+    .input_title:focus,
+    .input_content:focus {
+        border-width: 0 0 2px 0px;
+        border-color: blue;
+    }
+
+    .input_title,
+    .input_content {
+        outline: 0;
+        border-width: 0 0 1px 0;
+    }
+</style>
 {% endblock %}

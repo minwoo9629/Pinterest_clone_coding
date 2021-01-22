@@ -4,6 +4,7 @@ from articleapp.models import Article
 from projectapp.models import Project
 class ArticleCreationForm(ModelForm):
     project = forms.ModelChoiceField(queryset=Project.objects.all(), required=False)
+    image = forms.ImageField(widget=forms.FileInput)
     class Meta:
         model = Article
         fields = ['title', 'project', 'content', 'image']
@@ -17,3 +18,9 @@ class ArticleCreationForm(ModelForm):
         self.fields['content'].widget.attrs['class'] = "input_content"
         self.fields['content'].widget.attrs['rows'] = 1
         self.fields['content'].widget.attrs['columns'] = 40
+
+        self.fields['image'].widget.attrs['id'] = "input_img"
+        self.fields['image'].widget.attrs['onchange'] = "upload_img(this)"
+        self.fields['image'].widget.attrs['oninvalid'] = "alert('사진을 첨부해주세요!')"
+
+        self.fields['project'].widget.attrs['class'] = "input_project"
