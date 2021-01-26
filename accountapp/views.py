@@ -1,16 +1,37 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.views.generic.list import MultipleObjectMixin
+from django.http import JsonResponse, HttpResponse
 from accountapp.forms import AccountUpdateForm
 from accountapp.decorators import account_ownership_check
 from articleapp.models import Article
 # 리스트 안에 decorator로 만들어 사용할 수 있다.
 check_ownership = [login_required,account_ownership_check]
+
+class JsonableResponseMixin:
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        if self.request.is_ajax():
+            data = {'message':'ID 또는 PW가 틀립니다.'}
+            return JsonResponse(data=data, status=400)
+        else:
+            return response
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.request.is_ajax():
+            return response
+        else:
+            return response
+
+class AccountLoginView(JsonableResponseMixin, LoginView):
+    template_name = 'accountapp/login.html'
 
 class AccountCreateView(CreateView):
     model = User
@@ -33,10 +54,6 @@ class AccountDetailView(DetailView, MultipleObjectMixin):
         context['page_range'] = context['paginator'].page_range[start_index:end_index]
 
         return context
-
-
-
-
 
 # 일반 function에서 사용하는 decorator를 class 내 method에 사용할 수 있도록 변환해주는 decorator
 @method_decorator(check_ownership, 'get')

@@ -8,6 +8,7 @@ class CommentCreationForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CommentCreationForm, self).__init__(*args, **kwargs)
+        # self.fields['content'].widget.attrs.update({'id':'comment_input','placeholder':'댓글 입력','label':'','rows':'1','cols':'20'})
         self.fields['content'].label = ''
         self.fields['content'].widget.attrs['rows'] = 1
         self.fields['content'].widget.attrs['cols'] = 20

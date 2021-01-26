@@ -9,34 +9,14 @@
         <a href="{% url 'projectapp:list' %}" class="pinterest_header_nav btn rounded-pill"><span>Project</span></a>
         <a href="{% url 'articleapp:list' %}" class="pinterest_header_nav btn rounded-pill"><span>게시글</span></a>
         {% if not user.is_authenticated %}
-        <a href="{% url 'accountapp:login'%}?next={{request.path}}" class="pinterest_header_nav btn rounded-pill"
-            id="login_btn"><span>로그인</span></a>
+        <button class="pinterest_header_nav login_modal_btn btn rounded-pill">로그인</button>
         <a href="{% url 'accountapp:create'%}" class="pinterest_header_nav btn rounded-pill"><span>회원가입</span></a>
         {% else %}
         <a href="{% url 'subscribeapp:list' %}" class="pinterest_header_nav btn rounded-pill"><span>구독정보</span></a>
-        <a href="{% url 'accountapp:logout'%}"
-            class="pinterest_header_nav btn rounded-pill"><span>로그아웃</span></a>
+        <a href="{% url 'accountapp:logout'%}" class="pinterest_header_nav btn rounded-pill"><span>로그아웃</span></a>
         <a href="{% url 'accountapp:detail' user.id %}" class="pinterest_header_nav btn rounded-pill"><span>내
                 정보</span></a>
         {% endif %}
     </div>
 </div>
 {% include 'snippets/login_modal.html' %}
-<script>
-    $(document).ready(function () {
-        $('#login_btn').click(function (event) {
-            event.preventDefault()
-            this.blur();
-            $.ajax({
-                url: "{% url 'accountapp:login' %}",
-                method: "GET",
-                beforeSend: function () {
-                    $('#LoginModal').modal('show');
-                },
-            }).done(function (data) {
-                $('#LoginModal .modal-content .modal-body').html(data)
-            })
-        });
-        
-    })
-</script>
