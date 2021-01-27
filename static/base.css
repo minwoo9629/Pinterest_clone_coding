@@ -89,6 +89,7 @@ a:hover {
 html,body{
     min-height: 100%;
 }
+
 /* comment-modal css */
 .comment-modal {
     width: 100%;
@@ -113,8 +114,8 @@ html,body{
     position: relative;
 }
 
-/* login-modal css */
-.login-modal {
+/* login-modal sign_up_modal css */
+.login-modal, .sign_up_modal{
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -127,16 +128,17 @@ html,body{
     align-items: center;
 }
 
-.login-modal-content {
+.login-modal-content, .sign_up_modal_content{
     width: 400px;
-    height: 400px;
     background-color: white;
     border: none;
     border-radius: 1.5rem;
     padding: 1rem;
     position: relative;
 }
-
+.login-modal-content{
+    height: 400px;
+}
 @media screen and (max-width:1000px) {
     html {
         font-size: 14px;
@@ -171,7 +173,7 @@ html,body{
         width: 100%;
         height: 100%;
     }
-    .comment-modal-content {
+    .comment-modal-content{
         width: 500px;
         height: 250px;
     }
@@ -211,7 +213,7 @@ html,body{
         width: 100%;
         height: 100%;
     }
-    .comment-modal-content {
+    .comment-modal-content{
         width: 400px;
         height: 200px;
     }

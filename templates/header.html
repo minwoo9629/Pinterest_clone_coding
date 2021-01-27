@@ -10,13 +10,14 @@
         <a href="{% url 'articleapp:list' %}" class="pinterest_header_nav btn rounded-pill"><span>게시글</span></a>
         {% if not user.is_authenticated %}
         <button class="pinterest_header_nav login_modal_btn btn rounded-pill">로그인</button>
-        <a href="{% url 'accountapp:create'%}" class="pinterest_header_nav btn rounded-pill"><span>회원가입</span></a>
+        <button class="pinterest_header_nav sign_up_modal_btn btn rounded-pill">회원가입</button>
+        <!-- <a href="{% url 'accountapp:create'%}" class="pinterest_header_nav btn rounded-pill"><span>회원가입</span></a> -->
         {% else %}
         <a href="{% url 'subscribeapp:list' %}" class="pinterest_header_nav btn rounded-pill"><span>구독정보</span></a>
         <a href="{% url 'accountapp:logout'%}" class="pinterest_header_nav btn rounded-pill"><span>로그아웃</span></a>
-        <a href="{% url 'accountapp:detail' user.id %}" class="pinterest_header_nav btn rounded-pill"><span>내
-                정보</span></a>
+        <a href="{% url 'accountapp:detail' user.id %}" class="pinterest_header_nav btn rounded-pill"><span>내 정보</span></a>
         {% endif %}
     </div>
 </div>
 {% include 'snippets/login_modal.html' %}
+{% include 'snippets/sign_up_modal.html' %}

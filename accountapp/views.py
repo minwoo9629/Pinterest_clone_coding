@@ -2,15 +2,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.views.generic.list import MultipleObjectMixin
 from django.http import JsonResponse, HttpResponse
-from accountapp.forms import AccountUpdateForm
+from accountapp.forms import AccountUpdateForm, AccountCreateForm
+from django.contrib.auth.hashers import make_password
 from accountapp.decorators import account_ownership_check
 from articleapp.models import Article
+import json
 # 리스트 안에 decorator로 만들어 사용할 수 있다.
 check_ownership = [login_required,account_ownership_check]
 
@@ -35,9 +38,33 @@ class AccountLoginView(JsonableResponseMixin, LoginView):
 
 class AccountCreateView(CreateView):
     model = User
-    form_class = UserCreationForm
+    form_class = AccountCreateForm
     success_url = reverse_lazy('articleapp:list')
     template_name = 'accountapp/create.html'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return response
+
+    def form_invalid(self, form):    
+        response = super().form_invalid(form)
+        if self.request.is_ajax():
+            data = {}
+            for key, value in form.errors.items():
+                data[key] = value[0]
+            return JsonResponse(data=data, status=400)
+        else:
+            return response
+
+# class AccountCreateView(CreateView):
+#     model = User
+#     form_class = UserCreationForm
+#     success_url = reverse_lazy('articleapp:list')
+#     template_name = 'accountapp/create.html'
 
 class AccountDetailView(DetailView, MultipleObjectMixin):
     model = User
