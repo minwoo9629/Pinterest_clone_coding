@@ -85,8 +85,7 @@ class ArticleListView(ListView):
 
 @login_required
 @require_POST
-def Article_like(request):
-    pk = request.POST.get('pk', None)
+def Article_like(request, pk):
     article = get_object_or_404(Article, pk=pk)
     like, like_existence = Like.objects.get_or_create(user=request.user, article=article)
 
@@ -95,7 +94,7 @@ def Article_like(request):
         message = "False"
     else:
         message = "True"
-    context = {'like_count':article.like_count,'message':message}
+    context = {'like_count':article.like_count,'message':message ,'pk':pk}
 
     return JsonResponse(context)
         

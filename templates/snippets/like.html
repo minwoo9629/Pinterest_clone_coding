@@ -1,48 +1,27 @@
+{% load static %}
 <div style="display: inline-block;">
-    {% if user_like_flag %}
-    <span class="like material-icons" name="{{article.id}}" value="Like" style="color: red;">
-        favorite
-    </span>
-    {% else %}
-    <span class="like material-icons" name="{{article.id}}" value="Like">
-        favorite_border
-    </span>
-    {% endif %}
+    <form class="like_form" action="{% url 'articleapp:like' pk=article.id%}" method="POST">
+        {%csrf_token%}
+        {% if user_like_flag %}
+        <span class="like material-icons" name="{{article.id}}" value="Like" style="color: red;">
+            favorite
+        </span>
+        {% else %}
+        <span class="like material-icons" name="{{article.id}}" value="Like">
+            favorite_border
+        </span>
+        {% endif %}
+    </form>
     <p id="count-{{article.id}}" class="article_count">{{article.like_count}}개</p>
+
 </div>
-<script>
-    $('.like').click(function () {
-        var pk = $(this).attr('name')
-        $.ajax({
-            method: "POST",
-            url: "{% url 'articleapp:like'%}",
-            data: { 'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}' },
-            dataType: "json",
-        }).done(function (data) {
-            $("#count-" + pk).html(data.like_count + "개");
-            var users = $("#like-user-" + pk).text();
-            if (data.message === "True") {
-                $(".like").css('color', 'red')
-                $(".like").html("favorite")
-            } else {
-                $(".like").css('color', 'black')
-                $(".like").html("favorite_border")
-            }
-            if (users.indexOf(data.nickname) != -1) {
-                $("#like-user-" + pk).text(users.replace(data.nickname, ""));
-            } else {
-                $("#like-user-" + pk).text(data.nickname + users);
-            }
-        }).fail(function (request, status, error) {
-            alert("로그인이 필요합니다.")
-        })
-    })
-</script>
+<script src="{% static 'js/like.js'%}"></script>
 <style>
-    .like{
+    .like {
         cursor: pointer;
     }
-    .article_count{
+
+    .article_count {
         text-align: center;
     }
 </style>
