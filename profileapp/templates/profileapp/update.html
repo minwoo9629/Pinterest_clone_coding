@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load bootstrap4 %}
 {% block content %}
 <div style="text-align:center; max-width: 500px; margin: 4rem auto">
     <div class="mb-4">
@@ -7,8 +6,89 @@
     </div>
     <form action="{% url 'profileapp:update' target_profile.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="프로필 수정">
+        <div class="image_area">
+            <div class="update_img_box">
+                <img id="my_img" src="{{target_profile.image.url}}">
+                <label class="update_img_btn" for="input_myimg">
+                    <span class="material-icons update_image">
+                        change_circle
+                    </span>
+                </label>
+                {{form.image}}
+            </div>
+        </div>
+        <div class="profile_area">
+            <div class="nickname_area">
+                {{form.nickname}}
+            </div>
+            <div class="message_area">
+                {{form.message}}
+            </div>
+        </div>
+        <input type="submit" class="btn btn-dark rounded-pill col-3 mt-3" value="프로필 수정">
     </form>
 </div>
+<script>
+    function upload_img(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#my_img').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $(function () { //document ready call
+        $("#id_image").change(function () {
+            upload_img(this);
+        });
+    });
+</script>
+<style>
+    .image_area{
+        margin-bottom: 2rem;
+    }
+    .update_img_box {
+        position: relative;
+        margin: 0 auto;
+        height: 12rem;
+        width: 12rem;
+    }
+
+    #my_img {
+        height: 12rem;
+        width: 12rem;
+        border-radius: 20rem;
+        margin-bottom: 2rem;
+        object-fit: cover;
+    }
+
+    #input_myimg {
+        display: none;
+    }
+
+    .update_img_btn {
+        position: absolute;
+        z-index: 1;
+        top: 90%;
+        right: 0;
+    }
+    .update_image{
+        cursor: pointer;
+        font-size: 2.5rem;
+    }
+
+    .nickname_area,
+    .message_area {
+        margin: 0 auto 1rem auto;
+        width: 60%;
+    }
+
+    .input_nickname,
+    .input_message {
+        text-align: center;
+    }
+</style>
 {% endblock %}
