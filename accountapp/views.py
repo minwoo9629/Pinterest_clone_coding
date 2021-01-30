@@ -1,20 +1,19 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.views.generic.list import MultipleObjectMixin
 from django.http import JsonResponse, HttpResponse
-from accountapp.forms import AccountUpdateForm, AccountCreateForm
+from accountapp.forms import AccountPasswordChangeForm, AccountCreateForm
 from django.contrib.auth.hashers import make_password
 from accountapp.decorators import account_ownership_check
 from articleapp.models import Article
 import json
-# 리스트 안에 decorator로 만들어 사용할 수 있다.
+
 check_ownership = [login_required,account_ownership_check]
 
 class JsonableResponseMixin:
@@ -60,12 +59,6 @@ class AccountCreateView(CreateView):
         else:
             return response
 
-# class AccountCreateView(CreateView):
-#     model = User
-#     form_class = UserCreationForm
-#     success_url = reverse_lazy('articleapp:list')
-#     template_name = 'accountapp/create.html'
-
 class AccountDetailView(DetailView, MultipleObjectMixin):
     model = User
     template_name = 'accountapp/detail.html'
@@ -82,15 +75,22 @@ class AccountDetailView(DetailView, MultipleObjectMixin):
 
         return context
 
-# 일반 function에서 사용하는 decorator를 class 내 method에 사용할 수 있도록 변환해주는 decorator
-@method_decorator(check_ownership, 'get')
-@method_decorator(check_ownership, 'post')
-class AccountUpdateView(UpdateView):
-    model = User
-    form_class = AccountUpdateForm
-    context_object_name = 'target_user'
-    success_url = reverse_lazy('accountapp:hello')
-    template_name = 'accountapp/update.html'
+"""
+User Password Change
+"""
+@login_required
+def account_password_change_view(request):
+    if request.method == 'POST':
+        password_change_form = AccountPasswordChangeForm(request.user, request.POST)
+        if password_change_form.is_valid():
+            user = password_change_form.save()
+            update_session_auth_hash(request, user)
+            message.success(request, '비밀번호 성공')
+            return redirect('articleapp:list')
+    else:
+        password_change_form = AccountPasswordChangeForm(request.user)
+        
+    return render(request, 'accountapp/update.html', {'password_change_form':password_change_form})
 
 @method_decorator(check_ownership, 'get')
 @method_decorator(check_ownership, 'post')

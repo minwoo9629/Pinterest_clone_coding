@@ -1,14 +1,25 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django import forms
 from django.http import JsonResponse
 
-class AccountUpdateForm(UserCreationForm):
+class AccountPasswordChangeForm(PasswordChangeForm):
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['username'].disabled = True
+        super(AccountPasswordChangeForm, self).__init__(*args, **kwargs)
+        self.fields['old_password'].widget.attrs.update({
+            'class': 'form-control old_password material-icons',
+            'autofocus': False,
+            'placeholder':'lock 기존 비밀번호 입력',
+        })
+        self.fields['new_password1'].widget.attrs.update({
+            'class': 'form-control new_password1 material-icons',
+            'placeholder':'lock 새로운 비밀번호 입력',
+        })
+        self.fields['new_password2'].widget.attrs.update({
+            'class': 'form-control new_password2 material-icons',
+            'placeholder':'lock 비밀번호 확인',
+        })
 
 class AccountCreateForm(UserCreationForm):
 
