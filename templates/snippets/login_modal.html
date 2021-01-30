@@ -2,7 +2,12 @@
     <div class="login-modal-content">
         {% include 'accountapp/login.html' %}
         <div style="text-align: center;">
-            <a href="{% url 'accountapp:create' %}">계정이 없으신가요?</a>
+            <p class="sign_up_modal_btn change_modal">계정이 없으신가요?</p>
         </div>
     </div>
 </div>
+<script>
+    $('.change_modal').click(function(){
+        $('.login-modal').hide();
+    });
+</script>

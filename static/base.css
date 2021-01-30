@@ -139,6 +139,9 @@ html,body{
 .login-modal-content{
     height: 400px;
 }
+.change_modal{
+    cursor: pointer;
+}
 @media screen and (max-width:1000px) {
     html {
         font-size: 14px;
