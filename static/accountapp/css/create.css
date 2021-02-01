@@ -1,0 +1,11 @@
+.sign_up_form_group {
+    width: 13rem;
+    margin: 0 auto 1rem auto;
+}
+.username_error_div, .password_error_div{
+    margin: 0 0 1rem 0;
+    display: none;
+}
+#username_error_message, #password_error_message{
+    color: red;
+}

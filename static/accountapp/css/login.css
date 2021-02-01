@@ -1,0 +1,12 @@
+.login_form_group {
+    width: 13rem;
+    margin: 0 auto 1rem auto;
+}
+
+.error_div {
+    display: none;
+}
+
+#error_message {
+    color: red;
+}

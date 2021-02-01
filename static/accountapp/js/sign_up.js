@@ -8,14 +8,14 @@ $('.sign_up_btn').on('click', function (event) {
         type: method,
         data: formData
     }).done(function () {
-        location.reload()
+        location.reload();
         
     }).fail(function(data){
         if(data.responseJSON.hasOwnProperty('username')){
-            $('#username_error_message').text(data.responseJSON.username)
-            $('.username_error_div').show()
+            $('#username_error_message').text(data.responseJSON.username);
+            $('.username_error_div').show();
         }
-        $('#password_error_message').text(data.responseJSON.password1)
-        $('.password_error_div').show()
+        $('#password_error_message').text(data.responseJSON.password1);
+        $('.password_error_div').show();
     });
 });

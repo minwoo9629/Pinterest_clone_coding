@@ -1,4 +1,5 @@
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'accountapp/css/login.css'%}">
 <div style="text-align: center; max-width: 500px; margin: 2rem auto">
     <div class="mb-4">
         <h4>로그인</h4>
@@ -15,18 +16,4 @@
     <div class="error_div"><strong id="error_message"></strong></div>
 
 </div>
-<style>
-    .login_form_group {
-        width: 13rem;
-        margin: 0 auto 1rem auto;
-    }
-
-    .error_div {
-        display: none;
-    }
-
-    #error_message {
-        color: red;
-    }
-</style>
-<script src="{% static 'js/login.js'%}"></script>
+<script src="{% static 'accountapp/js/login.js'%}"></script>
