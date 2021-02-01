@@ -7,19 +7,41 @@ class AccountPasswordChangeForm(PasswordChangeForm):
 
     def __init__(self, *args, **kwargs):
         super(AccountPasswordChangeForm, self).__init__(*args, **kwargs)
+        self.fields['old_password'].label = '기존 비밀번호'
         self.fields['old_password'].widget.attrs.update({
-            'class': 'form-control old_password material-icons',
+            'class': 'form-control old_password',
             'autofocus': False,
-            'placeholder':'lock 기존 비밀번호 입력',
         })
+        self.fields['new_password1'].label = '새로운 비밀번호'
         self.fields['new_password1'].widget.attrs.update({
-            'class': 'form-control new_password1 material-icons',
-            'placeholder':'lock 새로운 비밀번호 입력',
+            'class': 'form-control new_password1',
         })
+        self.fields['new_password2'].label = '새로운 비밀번호 확인'
         self.fields['new_password2'].widget.attrs.update({
-            'class': 'form-control new_password2 material-icons',
-            'placeholder':'lock 비밀번호 확인',
+            'class': 'form-control new_password2',
         })
+    
+    def clean_old_password(self):
+        """
+        Validates that the old_password field is correct.
+        """
+        old_password = self.cleaned_data["old_password"]
+        if not self.user.check_password(old_password):
+            self.error_messages['password_incorrect'] = '잘못된 비밀번호 입니다.'
+            raise forms.ValidationError(
+                self.error_messages['password_incorrect'],
+                code='password_incorrect',
+            )
+        return old_password
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                self.error_messages['password_mismatch'] = '비밀번호가 일치하지 않습니다.'
+                raise forms.ValidationError(self.error_messages['password_mismatch'],code='password_mismatch',)
+        return password2
 
 class AccountCreateForm(UserCreationForm):
 

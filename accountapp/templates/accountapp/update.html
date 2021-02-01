@@ -7,12 +7,13 @@
     <form action="{% url 'accountapp:update'%}" method="post">
         {% csrf_token %}
         <div>
-            {{ password_change_form.old_password }}
-            <script type="text/javascript">
-                if (document.getElementsByName('old_password')[0].value != '') {
-                    document.getElementsByName('label_old_password')[0].setAttribute('class', 'active');
-                }
-            </script>
+            <div style="position: relative;">
+                <label name="label_old_password" for="{{ password_change_form.old_password.id_for_label }}">
+                    <i class="fas fa-lock"></i>
+                    {{password_change_form.old_password.label}}
+                </label>
+                {{ password_change_form.old_password }}
+
             {% if password_change_form.old_password.errors %}
             <script type="text/javascript">
                 document.getElementsByName('old_password')[0].setAttribute('class', 'form-control is-invalid');
@@ -23,34 +24,29 @@
             </div>
             {% endfor %}
             {% endif %}
-        </div>
-        <div>
-            {{ password_change_form.new_password1 }}
-            <script type="text/javascript">
-                if (document.getElementsByName('new_password1')[0].value != '') {
-                    document.getElementsByName('label_new_password1')[0].setAttribute('class', 'active');
-                }
-            </script>
-            {% if password_change_form.new_password1.errors %}
-            <script type="text/javascript">
-                document.getElementsByName('new_password1')[0].setAttribute('class', 'form-control is-invalid');
-            </script>
-            {% for error in password_change_form.new_password1.errors %}
-            <div class="invalid-feedback">
-                {{ error }}
             </div>
-            {% endfor %}
-            {% endif %}
         </div>
+
         <div>
-            {{ password_change_form.new_password2 }}
-            <script type="text/javascript">
-                if (document.getElementsByName('new_password2')[0].value != '') {
-                    document.getElementsByName('label_new_password2')[0].setAttribute('class', 'active');
-                }
-            </script>
+            <div style="position: relative;">
+                <label name="label_new_password1" for="{{ password_change_form.new_password1.id_for_label }}">
+                    <i class="fas fa-lock"></i>
+                    {{password_change_form.new_password1.label }}
+                </label>
+                {{ password_change_form.new_password1 }}
+            </div>
+        </div>
+
+        <div>
+            <div style="position: relative;">
+                <label name="label_new_password2" for="{{ password_change_form.new_password2.id_for_label }}">
+                    <i class="fas fa-lock"></i>
+                    {{password_change_form.new_password2.label }}
+                </label>
+                {{ password_change_form.new_password2 }}
             {% if password_change_form.new_password2.errors %}
             <script type="text/javascript">
+                document.getElementsByName('new_password1')[0].setAttribute('class', 'form-control is-invalid');
                 document.getElementsByName('new_password2')[0].setAttribute('class', 'form-control is-invalid');
             </script>
             {% for error in password_change_form.new_password2.errors %}
@@ -59,6 +55,7 @@
             </div>
             {% endfor %}
             {% endif %}
+            </div>
         </div>
         <div style="margin: 1rem auto 2rem auto;">
             <small>
@@ -74,30 +71,4 @@
         </div>
     </form>
 </div>
-<style>
-    .password_change_container {
-        text-align: center;
-        max-width: 31rem;
-        min-height: 31rem;
-        margin: 4rem auto;
-        border-radius: 1rem;
-        box-shadow: 0 0 4px #ccc;
-        padding: 3rem;
-    }
-
-    .old_password,
-    .new_password1,
-    .new_password2 {
-        width: 20rem;
-        margin: 1rem;
-    }
-
-    input::placeholder {
-        font-size: 1rem;
-    }
-
-    input:focus::-webkit-input-placeholder {
-        color: transparent;
-    }
-</style>
 {% endblock %}

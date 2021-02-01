@@ -85,7 +85,6 @@ def account_password_change_view(request):
         if password_change_form.is_valid():
             user = password_change_form.save()
             update_session_auth_hash(request, user)
-            message.success(request, '비밀번호 성공')
             return redirect('articleapp:list')
     else:
         password_change_form = AccountPasswordChangeForm(request.user)

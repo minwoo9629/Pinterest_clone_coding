@@ -1,0 +1,19 @@
+.password_change_container {
+    text-align: center;
+    max-width: 31rem;
+    min-height: 31rem;
+    margin: 4rem auto;
+    border-radius: 1rem;
+    box-shadow: 0 0 4px #ccc;
+    padding: 3rem;
+}
+label{
+    font-size: 0.5rem;
+    position: absolute;
+    top: -1.5rem;
+    left: 3rem;
+}
+.form-control{
+    width: 20rem;
+    margin: 2.5rem auto 1rem auto;
+}
