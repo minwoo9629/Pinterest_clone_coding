@@ -8,7 +8,7 @@
         {% csrf_token %}
         <div class="image_area">
             <div class="create_img_box">
-                <span class="material-icons profile_image" style="font-size: 12rem;">
+                <span class="material-icons default_profile_image" style="font-size: 12rem;">
                     account_circle
                 </span>
                 <img class="profile_image" id="my_img" src="">
@@ -38,7 +38,8 @@
 
             reader.onload = function (e) {
                 $('#my_img').attr('src', e.target.result);
-                $('.profile_image').toggle();
+                $('.default_profile_image').hide();
+                $('.profile_image').show();
             }
 
             reader.readAsDataURL(input.files[0]);
