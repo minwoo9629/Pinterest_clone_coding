@@ -9,4 +9,5 @@ urlpatterns = [
     path('update/<int:pk>', views.ArticleUpdateView.as_view(), name="update"),
     path('delete/<int:pk>', views.ArticleDeleteView.as_view(), name="delete"),
     path('like/<int:pk>', views.Article_like, name="like"),
+    path('download/<int:pk>', views.Article_image_download, name="download"),
 ] 

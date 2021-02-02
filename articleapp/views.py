@@ -10,8 +10,8 @@ from django.views.decorators.http import require_POST
 from django.urls import reverse_lazy
 from articleapp.decorators import article_ownership_check
 from commentapp.forms import CommentCreationForm
-from django.http import JsonResponse
-import json
+from django.http import JsonResponse, HttpResponse, Http404
+import json, os, mimetypes, urllib
 # Create your views here.
 
 @method_decorator(login_required, 'get')
@@ -23,6 +23,9 @@ class ArticleCreateView(CreateView):
     def form_valid(self, form):
         temp_article = form.save(commit=False)
         temp_article.writer = self.request.user
+        if self.request.FILES:
+            if 'image' in self.request.FILES.keys():
+                temp_article.filename = self.request.FILES['image'].name
         temp_article.save()
         return super().form_valid(form)
 
@@ -97,4 +100,16 @@ def Article_like(request, pk):
     context = {'like_count':article.like_count,'message':message ,'pk':pk}
 
     return JsonResponse(context)
+
+def Article_image_download(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    url = article.image.url[1:]
+    file_url = urllib.parse.unquote(url)
+    if os.path.exists(file_url):
+        with open(file_url, 'rb') as fh:
+            quote_file_url = urllib.parse.quote(article.filename.encode('utf-8'))
+            response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(file_url)[0])
+            response['Content-Disposition'] = 'attachment;filename*=UTF-8\'\'%s' % quote_file_url
+            return response
+        raise Http404
         

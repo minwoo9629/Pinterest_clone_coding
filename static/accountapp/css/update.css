@@ -7,7 +7,7 @@
     box-shadow: 0 0 4px #ccc;
     padding: 3rem;
 }
-label{
+.update_password_label{
     font-size: 0.5rem;
     position: absolute;
     top: -1.5rem;

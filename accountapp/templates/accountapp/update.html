@@ -8,7 +8,7 @@
         {% csrf_token %}
         <div>
             <div style="position: relative;">
-                <label name="label_old_password" for="{{ password_change_form.old_password.id_for_label }}">
+                <label class="update_password_label" name="label_old_password" for="{{ password_change_form.old_password.id_for_label }}">
                     <i class="fas fa-lock"></i>
                     {{password_change_form.old_password.label}}
                 </label>
@@ -29,7 +29,7 @@
 
         <div>
             <div style="position: relative;">
-                <label name="label_new_password1" for="{{ password_change_form.new_password1.id_for_label }}">
+                <label class="update_password_label" name="label_new_password1" for="{{ password_change_form.new_password1.id_for_label }}">
                     <i class="fas fa-lock"></i>
                     {{password_change_form.new_password1.label }}
                 </label>
@@ -39,7 +39,7 @@
 
         <div>
             <div style="position: relative;">
-                <label name="label_new_password2" for="{{ password_change_form.new_password2.id_for_label }}">
+                <label class="update_password_label" name="label_new_password2" for="{{ password_change_form.new_password2.id_for_label }}">
                     <i class="fas fa-lock"></i>
                     {{password_change_form.new_password2.label }}
                 </label>

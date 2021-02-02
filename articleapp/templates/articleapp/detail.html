@@ -30,9 +30,10 @@
                     </ul>
 
                 </div>
-                <button class="btn btn-primary rounded-pill col-2" style="float: right;">
+                <a class="btn btn-primary rounded-pill col-2" href="{% url 'articleapp:download' target_article.pk %}" style="float: right;">저장</a>
+                <!-- <button class="btn btn-primary rounded-pill col-2" style="float: right;">
                     저장
-                </button>
+                </button> -->
                 {% include 'snippets/like.html' with article=target_article %}
 
             </div>

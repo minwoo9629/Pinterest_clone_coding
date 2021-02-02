@@ -1,12 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 from projectapp.models import Project
+from uuid import uuid4
+from datetime import datetime
+
+def get_file_path(instance, filename):
+    ymd_path = datetime.now().strftime('%Y/%m/%d')
+    uuid_name = uuid4().hex
+    return '/'.join(['upload_file/article', ymd_path, uuid_name])
+
 class Article(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='article')
     project= models.ForeignKey(Project, on_delete=models.SET_NULL, related_name='article', null=True)
     title = models.CharField(max_length=200, null=False)
     content = models.TextField(null=True)
-    image = models.ImageField(upload_to='article/', null=True)
+    image = models.ImageField(upload_to=get_file_path, null=True, blank=True, verbose_name="첨부파일")
+    filename = models.CharField(max_length=64, null=True, verbose_name="첨부파일명")
     created_at = models.DateField(auto_created=True, null=True)
     like_user_set = models.ManyToManyField(User, blank=True, related_name='like_user_set', through='Like')
 
