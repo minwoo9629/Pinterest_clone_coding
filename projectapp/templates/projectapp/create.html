@@ -9,8 +9,8 @@
         {% csrf_token %}
         <div class="image_area">
             <div class="create_img_box">
-                <img class="default_image project_image" src="{% static 'image/example_image.jpg'%}" alt="예시 이미지">
-                <img class="project_image" id="my_img" src="" alt="">
+                <!-- <img class="default_image" src="" alt="예시 이미지"> -->
+                <img class="project_image" id="my_img" src="{% static 'image/example_image.jpg'%}" alt="">
                 <label class="create_img_btn" for="input_project_img">
                     <span class="material-icons update_image">
                         change_circle
@@ -39,7 +39,7 @@
 
             reader.onload = function (e) {
                 $('#my_img').attr('src', e.target.result);
-                $('.project_image').toggle();
+                $('.project_image').show();
                 $('.warning_message').css('color', 'blue');
                 $('.warning_message').text('사용할 수 있는 이미지입니다.');
             }
@@ -75,14 +75,12 @@
         border-radius: 1rem;
         margin-bottom: 2rem;
         object-fit: cover;
-        display: none;
     }
 
     .create_img_btn {
         position: absolute;
         z-index: 1;
         top: 90%;
-        right: -9rem;
     }
 
     .update_image {
