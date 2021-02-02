@@ -4,12 +4,16 @@
     <form action="{% url 'commentapp:create'%}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-
-        {% if user.is_authenticated %}
-        <input class="btn btn-outline-dark rounded-pill col-2 mt-3 mb-3 add_comment_btn" type="submit" value="작성"
-            style="float: right; margin-left: 1rem; display: none;">
-
+        {% if not user.is_authenticated %}
+        <script type="text/javascript">
+            var comment_input = document.getElementById('comment_input');
+            comment_input.disabled = 'disalbed';
+            comment_input.placeholder = "로그인 이후 댓글 입력이 가능합니다."
+        </script>
         {%endif%}
+        <input class="btn btn-outline-dark rounded-pill col-2 mt-3 mb-3 add_comment_btn" type="submit" value="작성"
+        style="float: right; margin-left: 1rem; display: none;">
+
         <input type="hidden" name="article_pk" value="{{article.pk}}">
     </form>
     <button class="btn btn-outline-dark rounded-pill col-2 mt-3 mb-3 cancel_btn"

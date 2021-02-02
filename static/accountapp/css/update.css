@@ -13,7 +13,7 @@
     top: -1.5rem;
     left: 3rem;
 }
-.form-control{
+.old_password, .new_password1, .new_password2{
     width: 20rem;
     margin: 2.5rem auto 1rem auto;
 }
