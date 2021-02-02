@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from projectapp.models import Project
@@ -28,6 +30,11 @@ class Article(models.Model):
         
     def __str__(self):
         return self.title
+    
+    def delete(self, *args, **kwargs):
+        if self.image:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+        super(Article, self).delete(*args, **kwargs)
 
 
 class Like(models.Model):

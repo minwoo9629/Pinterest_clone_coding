@@ -65,8 +65,9 @@ class ArticleUpdateView(UpdateView):
 
 @method_decorator(article_ownership_check, 'get')
 @method_decorator(article_ownership_check, 'post')
-class ArticleDeleteView(DeleteView, FormMixin):
+class ArticleDeleteView(DeleteView):
     model = Article
+    context_object_name = 'target_article'
     template_name = 'articleapp/delete.html'
     success_url = reverse_lazy('articleapp:list')
 

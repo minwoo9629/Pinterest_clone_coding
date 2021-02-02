@@ -22,9 +22,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'articleapp:delete' target_article.pk %}">
-                                글 삭제
-                            </a>
+                            <p class="delete_modal_btn">글 삭제</p>
                         </li>
                         {%endif%}
                     </ul>
@@ -51,7 +49,8 @@
                     </span>
                     {%else%}
                     <i class="fas fa-user-circle" style="font-size: 2rem;"></i>
-                    <span class="writer" style="margin-bottom: 0.8rem; position: absolute; top: 0.2rem; width: 2rem; margin-bottom: 0.8rem; left: 2.5rem;">
+                    <span class="writer"
+                        style="margin-bottom: 0.8rem; position: absolute; top: 0.2rem; width: 2rem; margin-bottom: 0.8rem; left: 2.5rem;">
                         {{target_article.writer.username}}
                     </span>
                     {%endif%}
@@ -77,6 +76,7 @@
         </div>
     </div>
 </div>
+{% include 'snippets/delete_modal.html' with target_article=target_article %}
 <script>
     $('.comment_btn').click(function () {
         this.blur()
@@ -89,6 +89,22 @@
 
     });
 
+    $(document).ready(function () {
+        $('.delete_modal_btn').click(function () {
+            $(".delete_modal").css({
+                "top": (($(window).height() - $(".delete_modal").outerHeight()) / 2 + $(window).scrollTop()) + "px",
+                "left": (($(window).width() - $(".delete_modal").outerWidth()) / 2 + $(window).scrollLeft()) + "px"
+            });
+            $('.delete_modal').css('display', 'flex');
+            $("body").css("overflow", "hidden");
+
+
+        });
+        $('.delete_modal_close').click(function () {
+            $('.delete_modal').hide();
+            $("body").css("overflow", "auto");
+        });
+    });
 </script>
 <style>
     .comment_btn:hover {
@@ -135,8 +151,36 @@
         height: 25%;
     }
 
-    .dropdown-menu li a {
+    .dropdown-menu li a, .delete_modal_btn{
         margin-left: 1rem;
+    }
+
+
+
+    .delete_modal {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 0px;
+        z-index: 1;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .delete_modal_content {
+        width: 30rem;
+        height: 19rem;
+        background-color: white;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 1rem;
+        position: relative;
+    }
+    .delete_modal_btn{
+        cursor: pointer;
     }
 </style>
 {% endblock %}
