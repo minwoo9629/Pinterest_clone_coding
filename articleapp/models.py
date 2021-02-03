@@ -18,11 +18,12 @@ class Article(models.Model):
     content = models.TextField(null=True)
     image = models.ImageField(upload_to=get_file_path, null=True, blank=True, verbose_name="첨부파일")
     filename = models.CharField(max_length=64, null=True, verbose_name="첨부파일명")
-    created_at = models.DateField(auto_created=True, null=True)
+    created_at = models.DateField(auto_now_add=True, null=True)
+    updated_at = models.DateField(auto_now=True, null=True)
     like_user_set = models.ManyToManyField(User, blank=True, related_name='like_user_set', through='Like')
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['created_at']
     
     @property
     def like_count(self):

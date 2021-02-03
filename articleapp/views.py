@@ -12,6 +12,7 @@ from articleapp.decorators import article_ownership_check
 from commentapp.forms import CommentCreationForm
 from django.http import JsonResponse, HttpResponse, Http404
 import json, os, mimetypes, urllib
+from django.conf import settings
 # Create your views here.
 
 @method_decorator(login_required, 'get')
@@ -59,6 +60,17 @@ class ArticleUpdateView(UpdateView):
     template_name = 'articleapp/update.html'
     context_object_name = 'target_article'
 
+    def form_valid(self, form):
+        article = get_object_or_404(Article, pk=self.kwargs['pk'])
+        os.remove(os.path.join(settings.MEDIA_ROOT, article.image.path))
+
+        temp_article = form.save(commit=False)
+        if self.request.FILES:
+            if 'image' in self.request.FILES.keys():
+                temp_article.filename = self.request.FILES['image'].name
+        temp_article.save()
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse_lazy('articleapp:detail', kwargs={'pk': self.object.pk})
 
@@ -76,7 +88,7 @@ class ArticleListView(ListView):
     model = Article
     context_object_name = 'article_list'
     template_name = 'articleapp/list.html'
-    paginate_by = 10
+    paginate_by = 20
     block_size = 5
 
     def get_context_data(self, **kwargs):
