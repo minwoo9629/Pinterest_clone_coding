@@ -1,32 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<style>
-    .container {
-        padding: 0;
-        margin: 0 auto;
-    }
-    .container a{
-        width: 35%;
-        max-width: 200px;
-    }
-    .container div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 1rem;
-    }
-
-    .container img {
-        width: 100%;
-        border-radius: 1rem;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'articleapp/list.css'%}">
 {% if article_list %}
 <div class="container">
     {%for article in article_list %}
     <a href="{% url 'articleapp:detail' article.pk %}">
-        <!-- card.html 안에 article이라는 객체가 필요하기 때문에 with 를 사용한다. -->
         {% include 'snippets/card.html' with article=article %}
     </a>
     {%endfor%}

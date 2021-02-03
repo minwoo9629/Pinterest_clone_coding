@@ -129,7 +129,7 @@ html,body{
 }
 
 .login-modal-content, .sign_up_modal_content{
-    width: 400px;
+    width: 25rem;
     background-color: white;
     border: none;
     border-radius: 1.5rem;
@@ -137,7 +137,7 @@ html,body{
     position: relative;
 }
 .login-modal-content{
-    height: 400px;
+    height: 25rem;
 }
 .change_modal{
     cursor: pointer;
@@ -184,7 +184,7 @@ html,body{
 
 @media screen and (max-width:600px) {
     html {
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .article_container {

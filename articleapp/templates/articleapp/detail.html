@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'articleapp/comment.css'%}">
 <div class="article_container">
     <div class="article_image_container">
         <img class="article_image" src="{{target_article.image.url}}" alt="">
@@ -77,110 +79,5 @@
     </div>
 </div>
 {% include 'snippets/delete_modal.html' with target_article=target_article %}
-<script>
-    $('.comment_btn').click(function () {
-        this.blur()
-        $('.comment_btn').toggle();
-        $('.comments').toggle();
-    });
-    $('.more_horiz').click(function () {
-        this.blur()
-        $('.dropdown-menu').toggle();
-
-    });
-
-    $(document).ready(function () {
-        $('.delete_modal_btn').click(function () {
-            $(".delete_modal").css({
-                "top": (($(window).height() - $(".delete_modal").outerHeight()) / 2 + $(window).scrollTop()) + "px",
-                "left": (($(window).width() - $(".delete_modal").outerWidth()) / 2 + $(window).scrollLeft()) + "px"
-            });
-            $('.delete_modal').css('display', 'flex');
-            $("body").css("overflow", "hidden");
-
-
-        });
-        $('.delete_modal_close').click(function () {
-            $('.delete_modal').hide();
-            $("body").css("overflow", "auto");
-        });
-    });
-</script>
-<style>
-    .comment_btn:hover {
-        background-color: #c7c1c1;
-    }
-
-    .comment_btn {
-        font-size: 2rem;
-        padding: 0;
-        border-radius: 10rem;
-    }
-
-    .more_horiz {
-        float: left;
-        height: 100%;
-        margin-right: 0.5rem;
-        border-radius: 10rem;
-    }
-
-    .more_horiz:hover {
-        background-color: #c7c1c1;
-    }
-
-    .dropdown-menu {
-        list-style-type: none;
-        position: absolute;
-        z-index: 1;
-        top: 2rem;
-        left: 0;
-        min-width: 160px;
-        padding: 0.4rem 0;
-        display: none;
-        border-radius: 1rem;
-        box-shadow: 0 0 4px #ccc;
-        font-weight: bold;
-    }
-
-    .dropdown-menu li:hover {
-        background-color: #c7c1c1;
-    }
-
-    .dropdown-menu li {
-        width: 100%;
-        height: 25%;
-    }
-
-    .dropdown-menu li a, .delete_modal_btn{
-        margin-left: 1rem;
-    }
-
-
-
-    .delete_modal {
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-color: rgba(0, 0, 0, 0.5);
-        position: absolute;
-        top: 0px;
-        z-index: 1;
-        display: none;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .delete_modal_content {
-        width: 30rem;
-        height: 19rem;
-        background-color: white;
-        border: none;
-        border-radius: 1.5rem;
-        padding: 1rem;
-        position: relative;
-    }
-    .delete_modal_btn{
-        cursor: pointer;
-    }
-</style>
+<script src="{% static 'js/articleapp/comment.js'%}"></script>
 {% endblock %}

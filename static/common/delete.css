@@ -1,0 +1,25 @@
+.delete_modal {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0px;
+    z-index: 1;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete_modal_content {
+    width: 30rem;
+    height: 19rem;
+    background-color: white;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    position: relative;
+}
+.delete_modal_btn{
+    cursor: pointer;
+}

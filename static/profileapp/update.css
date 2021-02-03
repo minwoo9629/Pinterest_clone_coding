@@ -1,0 +1,21 @@
+.update_img_box {
+    position: relative;
+    margin: 0 auto;
+    height: 12rem;
+    width: 12rem;
+}
+
+#my_img {
+    height: 12rem;
+    width: 12rem;
+    border-radius: 20rem;
+    margin-bottom: 2rem;
+    object-fit: cover;
+}
+
+.update_img_btn {
+    position: absolute;
+    z-index: 1;
+    top: 90%;
+    right: 0;
+}

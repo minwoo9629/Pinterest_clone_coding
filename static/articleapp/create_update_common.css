@@ -1,0 +1,97 @@
+.main_area {
+    width: 100%;
+    height: 25rem;
+}
+
+.image_area {
+    width: 50%;
+    height: 100%;
+    float: left;
+    margin: 5rem 0 1rem 0;
+    padding: 0 2rem;
+}
+
+#input_img {
+    display: none;
+}
+
+#my_img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 1rem;
+}
+
+.delete_image {
+    border-radius: 2rem;
+    padding: 0.5rem;
+    font-size: 2rem;
+    box-shadow: 0 0 4px #ccc;
+    z-index: 1;
+    left: 0;
+    position: absolute;
+    background-color: white;
+    cursor: pointer;
+}
+
+.delete_image:hover {
+    background-color: #F2F2F2;
+}
+
+.upload_contour {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    border: 3px dashed #A4A4A4;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.content_area {
+    width: 50%;
+    height: 100%;
+    float: right;
+}
+
+.project_area {
+    text-align: right;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.input_project {
+    margin-right: 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    box-shadow: 0 0 4px #ccc;
+}
+
+.input_project:focus {
+    outline: none;
+}
+
+.input_title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0 2rem 1rem;
+    width: 100%;
+}
+
+.input_content {
+    width: 100%;
+    margin: 1rem 0 2rem 1rem;
+    resize: none;
+}
+
+.input_title:focus,
+.input_content:focus {
+    border-width: 0 0 2px 0px;
+    border-color: blue;
+}
+
+.input_title,
+.input_content {
+    outline: 0;
+    border-width: 0 0 1px 0;
+}

@@ -1,0 +1,50 @@
+.image_area {
+    margin-bottom: 2rem;
+}
+
+.create_img_box {
+    position: relative;
+    margin: 0 auto;
+    height: 12rem;
+    width: 12rem;
+}
+
+#input_project_img {
+    display: none;
+}
+
+#my_img {
+    height: 12rem;
+    width: 12rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    object-fit: cover;
+}
+
+.create_img_btn {
+    position: absolute;
+    z-index: 1;
+    top: 90%;
+}
+
+.update_image {
+    cursor: pointer;
+    font-size: 2.5rem;
+}
+.default_image{
+    height: 12rem;
+    width: 12rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    object-fit: cover;
+}
+.title_area,
+.description_area {
+    margin: 0 auto 1rem auto;
+    width: 60%;
+}
+
+.input_title,
+.input_description {
+    text-align: center;
+}

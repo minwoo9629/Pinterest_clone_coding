@@ -1,0 +1,23 @@
+#input_myimg {
+    display: none;
+}
+
+.image_area{
+    margin-bottom: 2rem;
+}
+
+.update_image{
+    cursor: pointer;
+    font-size: 2.5rem;
+}
+
+.nickname_area,
+.message_area {
+    margin: 0 auto 1rem auto;
+    width: 60%;
+}
+
+.input_nickname,
+.input_message {
+    text-align: center;
+}
