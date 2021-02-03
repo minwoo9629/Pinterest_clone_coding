@@ -36,10 +36,10 @@
             href="{% url 'accountapp:update'%}">
             settings
         </a>
-        <a class="material-icons" style="box-shadow: 0 0 4px #fcc; border-radius: 10rem; padding: .3rem;"
-            href="{% url 'accountapp:delete' user.id %}">
+        <p class="material-icons delete_modal_btn"
+            style="box-shadow: 0 0 4px #fcc; border-radius: 10rem; padding: .3rem;">
             cancel
-        </a>
+        </p>
         {% endif %}
     </div>
 
@@ -47,4 +47,51 @@
         {% include 'snippets/list_fragment.html' with article_list=object_list %}
     </div>
 </div>
+{% include 'snippets/delete_modal.html' with target_article=target_article %}
+<style>
+    .delete_modal_btn {
+        cursor: pointer;
+    }
+
+    .delete_modal {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 0px;
+        z-index: 1;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .delete_modal_content {
+        width: 30rem;
+        height: 19rem;
+        background-color: white;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 1rem;
+        position: relative;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.delete_modal_btn').click(function () {
+            $(".delete_modal").css({
+                "top": (($(window).height() - $(".delete_modal").outerHeight()) / 2 + $(window).scrollTop()) + "px",
+                "left": (($(window).width() - $(".delete_modal").outerWidth()) / 2 + $(window).scrollLeft()) + "px"
+            });
+            $('.delete_modal').css('display', 'flex');
+            $("body").css("overflow", "hidden");
+
+
+        });
+        $('.delete_modal_close').click(function () {
+            $('.delete_modal').hide();
+            $("body").css("overflow", "auto");
+        });
+    });
+</script>
 {% endblock %}

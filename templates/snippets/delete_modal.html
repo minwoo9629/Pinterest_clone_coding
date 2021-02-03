@@ -1,7 +1,11 @@
 <div class="delete_modal">
     <div class="delete_modal_content">
         <div style="text-align: center; margin-top: 4rem;">
-            {% include 'articleapp/delete.html'%}
+            {% if target_article %}
+                {% include 'articleapp/delete.html'%}
+            {%else%}
+                {% include 'accountapp/delete.html'%}
+            {%endif%}
         </div>
         <div style="text-align: center;">
             <button class="btn btn-dark rounded-pill col-3 delete_modal_close">아니오</button>
