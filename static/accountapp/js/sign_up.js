@@ -11,11 +11,13 @@ $('.sign_up_btn').on('click', function (event) {
         location.reload();
         
     }).fail(function(data){
+        console.log(data)
+        console.log(data.responseJSON)
         if(data.responseJSON.hasOwnProperty('username')){
             $('#username_error_message').text(data.responseJSON.username);
             $('.username_error_div').show();
         }
-        $('#password_error_message').text(data.responseJSON.password1);
+        $('#password_error_message').text(data.responseJSON.password2);
         $('.password_error_div').show();
     });
 });

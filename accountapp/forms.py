@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django import forms
 from django.http import JsonResponse
+from django.core.exceptions import ValidationError
 
 class AccountPasswordChangeForm(PasswordChangeForm):
 
@@ -51,6 +52,7 @@ class AccountCreateForm(UserCreationForm):
         self.fields['password1'].error_messages = {'required':'비밀번호를 입력해주세요.'}
         self.fields['password2'].error_messages = {'required':'비밀번호를 입력해주세요.'}
 
+
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
@@ -66,5 +68,4 @@ class AccountCreateForm(UserCreationForm):
             self.add_error('username','이미 가입된 아이디입니다.')
         except:
             pass
-
     

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'articleapp/list.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'articleapp/css/list.css'%}">
 {% if article_list %}
 <div class="container">
     {%for article in article_list %}
@@ -10,7 +10,7 @@
     </a>
     {%endfor%}
 </div>
-<script src="{% static 'js/magic_grid.js'%}"></script>
+<script src="{% static 'common/js/magic_grid.js'%}"></script>
 {%else%}
 <div class="text-center">
     <h1>등록된 게시글이 없습니다.</h1>

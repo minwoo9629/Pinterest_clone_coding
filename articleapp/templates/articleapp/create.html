@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'articleapp/create.css'%}">
-<link rel="stylesheet" type="text/css" href="{% static 'articleapp/create_update_common.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'articleapp/css/create.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'articleapp/css/create_update_common.css'%}">
 <script src="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/js/medium-editor.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@5.23.2/dist/css/medium-editor.min.css" type="text/css"
     media="screen" charset="utf-8">
@@ -61,5 +61,5 @@
     </div>
 </div>
 <script>var editor = new MediumEditor('.editable');</script>
-<script src="{% static 'js/articleapp/image_thumbnail.js'%}"></script>
+<script src="{% static 'articleapp/js/image_thumbnail.js'%}"></script>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'articleapp/comment.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'articleapp/css/comment.css'%}">
 <div class="article_container">
     <div class="article_image_container">
         <img class="article_image" src="{{target_article.image.url}}" alt="">
@@ -79,5 +79,5 @@
     </div>
 </div>
 {% include 'snippets/delete_modal.html' with target_article=target_article %}
-<script src="{% static 'js/articleapp/comment.js'%}"></script>
+<script src="{% static 'articleapp/js/comment.js'%}"></script>
 {% endblock %}
