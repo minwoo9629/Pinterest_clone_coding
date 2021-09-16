@@ -26,10 +26,10 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_db',
-        'USER': 'django_db_user',
-        'PASSWORD': 'password1234',
-        'HOST': 'mariadb',
-        'PORT': '3306,
+        'NAME': env('DEPLOY_DB_NAME'),
+        'USER': env('DEPLOY_DB_USER'),
+        'PASSWORD': env('DEPLOY_DB_PASSWORD'),
+        'HOST': env('DEPLOY_DB_HOST'),
+        'PORT': env('DEPLOY_DB_PORT'),
     }
 }
