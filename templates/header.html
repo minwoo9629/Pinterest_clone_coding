@@ -14,7 +14,8 @@
         {% else %}
         <a href="{% url 'subscribeapp:list' %}" class="pinterest_header_nav btn rounded-pill"><span>구독정보</span></a>
         <a href="{% url 'accountapp:logout'%}" class="pinterest_header_nav btn rounded-pill"><span>로그아웃</span></a>
-        <a href="{% url 'accountapp:detail' user.id %}" class="pinterest_header_nav btn rounded-pill"><span>내 정보</span></a>
+        <a href="{% url 'accountapp:detail' user.id %}"
+            class="pinterest_header_nav btn rounded-pill"><span>내정보</span></a>
         {% endif %}
     </div>
 </div>
