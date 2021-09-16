@@ -27,10 +27,10 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pinterest',
-        'USER': 'postgres',
-        'PASSWORD': 'smart796',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': env('LOCAL_DB_NAME'),
+        'USER': env('LOCAL_DB_USER'),
+        'PASSWORD': env('LOCAL_DB_PASSWORD'),
+        'HOST': env('LOCAL_DB_HOST'),
+        'PORT': env('LOCAL_DB_PORT'),
     }
 }
